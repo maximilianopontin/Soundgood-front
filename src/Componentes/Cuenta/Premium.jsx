@@ -3,72 +3,45 @@ import Footer from "../Footer/Footer";
 import { Nav } from "../Nav/Nav";
 import { Link } from 'react-router-dom';
 import './EditarPerfil.css';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 
 function Premium() {
-    const [mensajeGuardado, setMensajeGuardado] = useState(false);
-    const [cliente, setCliente] = useState({
-        tarjeta: '',
-        fecha: '',
-        codigo: ''
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setCliente({ ...cliente, [name]: value });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Aquí deberías hacer una llamada a la API para guardar los datos actualizados del cliente
-        console.log('Datos actualizados del cliente:', cliente);
-        setMensajeGuardado(true);
-        // Ocultar el mensaje después de 3 segundos
-        setTimeout(() => setMensajeGuardado(false), 3000);
-    };
-
-    return (
-        <>
-            <Nav />
-            <div className="contenedor-premium">
-                <form className="form" onSubmit={handleSubmit}>
-                    <h1>Acceder a Premium</h1>
-                    <input
-                        type="text"
-                        name="tarjeta"
-                        placeholder="N° de tarjeta"
-                        required
-                        value={cliente.tarjeta}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="date"
-                        name="fecha"
-                        placeholder="Fecha"
-                        required
-                        value={cliente.fecha}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="codigo"
-                        placeholder="codigo"
-                        required
-                        value={cliente.codigo}
-                        onChange={handleChange}
-                    />
-                    <button type="submit" className="btn-guardar">Pagar</button>
-                    <div className="error-message">
-                        {mensajeGuardado && <p className="mensaje-guardado">Su pago fue exitoso, disfrute de Sound Good premium</p>}
-                    </div>
-                   
-                </form> 
-                <Link to="/cuenta">
-                        <button className="btn-regresar-premium">Regresar a cuenta</button>
-                    </Link>
-            </div>
-            <Footer />
-        </>
-    );
-}
-
-export default Premium;
+    const [preferendeId, setPreferenceId] = useState(null)
+    initMercadoPago('APP_USR-7481233767070694-102420-be7e374961dd92e3cc39446b697d1e19-225509543', { locale: 'es-AR' })
+    const createPreference = async () => {
+        try {
+            const res = await fetch('https://soundgood-back.onrender.com/create-preference', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: "Soundgood premium",
+                    quantity: 1,
+                    unit_price: 50
+                })
+            })
+            const parsed = await res.json()
+            const { id } = parsed
+            return id
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+    const handleBuyingProcess = async () => {
+        const id = await createPreference()
+        if (id) setPreferenceId(id)
+    }
+return(
+    <>
+     <main><h2>Una cápsula Starbucks para el profe</h2>
+            <button onClick={handleBuyingProcess} >Pagar con mercado pago</button>
+            {
+                preferendeId &&
+                <Wallet initialization={{ preferenceId: preferendeId }} customization={{ texts: { valueProp: 'smart_option' } }} />
+            }
+        </main>
+    </>
+)
+ }
+ export default Premium;
