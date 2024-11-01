@@ -34,13 +34,15 @@ function Premium() {
     }
 return(
     <>
-     <main><h2>Una cápsula Starbucks para el profe</h2>
+    <Nav/>
+     <main><h2>Sound Good Premium </h2>
             <button onClick={handleBuyingProcess} >Pagar con mercado pago</button>
             {
                 preferendeId &&
                 <Wallet initialization={{ preferenceId: preferendeId }} customization={{ texts: { valueProp: 'smart_option' } }} />
             }
         </main>
+        <Footer/>
     </>
 )
  }
