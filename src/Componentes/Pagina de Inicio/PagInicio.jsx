@@ -1,7 +1,6 @@
 // en esta seccion se muestra la pagina de inicio para registro e inicio de seccion
 import React from "react";
-import { Logo } from '../../logo/logo';
-import './PagInicio.css';
+import logo from '../../logo/logo.png'
 import Reproductor from '../Reproductor musica/Reproductor';
 import { Link } from "react-router-dom";
 
@@ -10,7 +9,7 @@ function PagInicio() {
     return (
         <div>
             <div>
-                <Logo />
+            <img src={logo} alt="Logo" className="Logo" />
             </div>
 
             <div>
