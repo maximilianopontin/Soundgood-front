@@ -1,0 +1,63 @@
+
+ [
+  {
+    "url": "./Musica/1.mp3",
+    "title": "Emanero, Karina, Jmena, Angela-Sinverguenza",
+    "tags": ["Rap y hip-hop"],
+    "image": "https://www.lavoz.com.ar/resizer/2IJ2fSitx6xjHGeuUtmVo4aEBSE=/0x0:0x0/980x640/filters:quality(80):format(webp)/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/2XY5CYWGABFCTGB4OQAXG3LXUM.gif"
+  },
+  {
+    "url": "./Musica/2.mp3",
+    "title": "Los Ángeles Azules, Emilia - Perdonarte ¿Para Qué?",
+    "tags": ["Urbano y pop latino"],
+    "image": "https://i.pinimg.com/originals/49/c0/1b/49c01bacaf8ee52e51dba2e3798be944.jpg"
+  },
+  {
+    "url": "./Musica/3.mp3",
+    "title": "Luck Ra, Khea - Hola perdida",
+    "tags": ["Pop Urbano"],
+    "image": "https://fmlike.com.ar/wp-content/uploads/2024/01/WhatsApp-Image-2024-01-08-at-15.33.14.jpeg"
+  },
+  {
+    "url": "./Musica/4.mp3",
+    "title": "Maria Becerra - Corazon vacio",
+    "tags": ["Pop Urbano"],
+    "image": "https://i.pinimg.com/originals/f7/1b/29/f71b296d5b0c2b4bf443b37ba4f8b917.jpg"
+  },
+  {
+    "url": "./Musica/5.mp3",
+    "title": "Emanero, La Konga, Antonio Rios - Adicto",
+    "tags": ["Rap"],
+     "image": "https://i.pinimg.com/564x/0d/95/6c/0d956cb35d5df2b83a779e12332b2633.jpg"
+  },
+  {
+    "url": "./Musica/6.mp3",
+    "title": "Tiago PZK, Ke Personajes - Piel",
+    "tags": ["Rap y Pop"],
+     "image": "https://i.pinimg.com/originals/0e/c7/9f/0ec79f84337aa315e1c482f81992fb54.jpg"
+  },
+  {
+    "url": "./Musica/7.mp3",
+    "title": "Fer Vazquez, Flor Alvarez - Te Amo",
+    "tags": ["Pop Latino"],
+     "image": "https://i.pinimg.com/564x/7c/e6/92/7ce69218592dff7bf02de31a57f2225f.jpg"
+  },
+  {
+    "url": "./Musica/8.mp3",
+    "title": "Fer Vazquez, Flor Alvarez - Sin Querer",
+    "tags": ["Pop Latino"],
+     "image": "https://i.pinimg.com/736x/36/37/0e/36370e9dcff74cb6c830819f89683363.jpg"
+  },
+  {
+    "url": "./Musica/9.mp3",
+    "title": "Bauti Mascia, Cele Arrabal - Ya no me duele",
+    "tags": ["Pop Urbano"],
+     "image": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/ce/db/f2/cedbf2d5-a807-3115-7766-da45ba516f26/5054197935602.jpg/316x316bb.webp"
+  },
+  {
+    "url": "./Musica/10.mp3",
+    "title": "TINI, BM, Big One - Lágrimas",
+    "tags": ["Pop"],
+     "image": "https://i.pinimg.com/originals/f2/31/00/f23100a01832d310712b37c70ec4416d.jpg"
+  }
+]

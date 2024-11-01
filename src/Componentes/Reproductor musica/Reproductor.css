@@ -1,0 +1,72 @@
+/*estilo contenedor */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  z-index: 1000; /* Asegúrate de que esté por encima del reproductor */
+}
+
+.reproductor{
+  margin-bottom: -29px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Asegúrate de que esté por encima del reproductor */
+}
+ 
+._wrapper_1sefb_1{
+  overflow: visible !important;
+  }
+  /*titulo cancion*/
+  ._title_1ldbx_1 {
+     font-family: inherit !important;
+   font-size: 16px!important;
+   padding-top: 10px !important;
+  }
+/*time*/
+._time_ac0au_1{
+  font-size: 16px!important;
+  padding-top: 10px !important;
+}
+  /*boton repetir*/
+  ._loop_1v4pf_1 {
+width: 20px !important;
+height: 20px !important;
+  }
+/*boton cancion anterior*/
+  ._previous_1mino_1{
+    width: 20px !important;
+    height: 20px !important;
+      }
+/*boton play*/
+    ._play_rfl62_1 {
+      width: 20px !important;
+      height: 20px !important;
+        }
+  /*boton pausa*/
+._pause_1talx_1 {
+  width: 20px !important;
+  height: 20px !important;
+/* styles.css */
+.custom-player-container {
+    border: red solid;
+    height: 150px; /* Ajusta la altura deseada */
+    /* Puedes agregar más estilos aquí */
+  }
+}
+  ._next_147p5_1 {
+    width: 20px !important;
+      height: 20px !important;
+  }
+._shuffle_15ul3_1 {
+  width: 20px !important;
+    height: 20px !important;
+}
+  /*tiempo de cancion*/
+  ._container_1kekm_1{
+    margin-bottom: 10px !important;
+  }

@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "contraseña": "Password123$",
+    "fechaDeNacimiento": "1980-01-15"
+  },
+  {
+    "id": 2,
+    "nombre": "María García",
+    "email": "maria.garcia@example.com",
+    "contraseña": "SecurePass456&",
+    "fechaDeNacimiento": "1992-05-23"
+  },
+  {
+    "id": 3,
+    "nombre": "Carlos Hernández",
+    "email": "carlos.hernandez@example.com",
+    "contraseña": "MySecret789@",
+    "fechaDeNacimiento": "1985-11-30"
+  },
+  {
+    "id": 4,
+    "nombre": "Ana López",
+    "email": "ana.lopez@example.com",
+    "contraseña": "Password321&",
+    "fechaDeNacimiento": "1990-07-19"
+  },
+  {
+    "id": 5,
+    "nombre": "Luis Martínez",
+    "email": "luis.martinez@example.com",
+    "contraseña": "Passw0rd!@#",
+    "fechaDeNacimiento": "1988-03-27"
+  },
+  {
+    "id": 6,
+    "nombre": "Sofía Fernández",
+    "email": "sofia.fernandez@example.com",
+    "contraseña": "SafePass987$",
+    "fechaDeNacimiento": "1995-09-13"
+  },
+  {
+    "id": 7,
+    "nombre": "Jorge Sánchez",
+    "email": "jorge.sanchez@example.com",
+    "contraseña": "NewPass123@",
+    "fechaDeNacimiento": "1982-12-05"
+  },
+  {
+    "id": 8,
+    "nombre": "Ludmila Miguens",
+    "email": "miguensludmila@gmail.com",
+    "contraseña": "Wrt123ma@",
+    "fechaDeNacimiento": "2001-08-02"
+  },
+  {
+    "id": 9,
+    "nombre": "Diego Rodríguez",
+    "email": "diego.rodriguez@example.com",
+    "contraseña": "SuperSecret789$",
+    "fechaDeNacimiento": "1993-10-21"
+  },
+  {
+    "id": 10,
+    "nombre": "Laura Morales",
+    "email": "laura.morales@example.com",
+    "contraseña": "Password999@",
+    "fechaDeNacimiento": "1987-08-30"
+  },
+  {
+    "id": 11,
+    "nombre": "Maximiliano Pontin",
+    "email": "maxipontin92@gmail.com",
+    "contraseña": "Mmp1992..",
+    "fechaDeNacimiento": "1992-11-15"
+  }
+]

@@ -1,0 +1,72 @@
+  .container-editar-perfil {
+    max-width: 35%;
+    margin: 50px auto;
+    padding: 50px;
+    border-radius: 8px;
+    height: 55%;
+    margin-top: 100px;
+    text-align: left;
+  }
+
+  label {
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-editar-Perfil {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  .contenedor-premium {
+    margin-bottom: 100px;
+    margin-top: 100px;
+
+  }
+  .btn-guardar{
+    align-self: center; /*contenedor al centro*/
+    align-items: center; /* texto centrado*/
+    width: 100%; /* Ancho completo para el botón */
+    padding: 10px; /* Espaciado interno */
+    background-color:#5fa25b; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;  /* Sin borde */
+    border-radius: 3px; /* Bordes redondeados */
+  }
+    .btn-guardar{
+    align-self: center; /*contenedor al centro*/
+    align-items: center; /* texto centrado*/
+    width: 100%; /* Ancho completo para el botón */
+    padding: 10px; /* Espaciado interno */
+    background-color:#5fa25b; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;  /* Sin borde */
+    border-radius: 3px; /* Bordes redondeados */
+  }
+  .btn-regresar{
+    align-items: center; /* texto centrado*/
+    width: 100%; /* Ancho completo para el botón */
+    padding: 10px; /* Espaciado interno */
+    background-color:#bbbfbb6f; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;  /* Sin borde */
+    border-radius: 3px; /* Bordes redondeados */
+  }
+  .btn-regresar-premium{
+    align-items: center; /* texto centrado*/
+    width: 29%; /* Ancho completo para el botón */
+    padding: 10px; /* Espaciado interno */
+    background-color:#bbbfbb6f; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;  /* Sin borde */
+    border-radius: 3px; /* Bordes redondeados */
+
+  }

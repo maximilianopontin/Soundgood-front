@@ -1,0 +1,39 @@
+.cuenta{
+    margin-top: 100px;
+}
+.cuenta-btn {
+    display: flex; /* Usar flexbox para el diseño */
+    flex-direction: column; /* Alinear elementos verticalmente */
+    width: 20%; /* Ancho del formulario */
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+    padding: 10px;
+    border-radius: 5px; /* Bordes redondeados */
+    margin-bottom: 200px;
+    margin-top: 100px;
+}
+
+
+.btn {
+    align-self: center; /*contenedor al centro*/
+    align-items: center; /* texto centrado*/
+    width: 200px; /* Ancho completo para el botón */
+    padding: 10px; /* Espaciado interno */
+    background-color: #5fa25b; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;  /* Sin borde */
+    border-radius: 3px; /* Bordes redondeados */
+    margin: 10px;
+}
+.btn-salir{
+    align-self: center; /*contenedor al centro*/
+    align-items: center; /* texto centrado*/
+    width: 200px; /* Ancho completo para el botón */
+    padding: 10px; /* Espaciado interno */
+    background-color: #bbbfbb6f; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;  /* Sin borde */
+    border-radius: 3px; /* Bordes redondeados */
+    margin: 10px;
+
+
+}

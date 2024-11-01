@@ -1,0 +1,64 @@
+.container-link{
+    padding: 20px;
+    font-family: inherit;
+
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #5fa25b;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+h3 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+p,
+ol {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #676262;
+}
+
+/* Estilo para listas ordenadas */
+
+ol {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+ul,ol {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #676262;
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.green-button {
+    background-color: #5fa25b;
+    color: white;
+    padding: 10px;
+    /* Espaciado interno */
+    border: none;
+    /* Sin borde */
+    border-radius: 3px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Cursor al pasar sobre el botón */
+    margin-right: 20px;
+    /* Margen derecho para separar los botones */
+    margin-bottom: 50px;
+    margin-top: 30px;
+}

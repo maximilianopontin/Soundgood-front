@@ -1,0 +1,32 @@
+[
+    {
+        "url": "./Musica/1.mp3",
+        "title": "Emanero, Karina, J mena, Angela Torres - Sinverguenza",
+        "tags": [
+            "Rap y hip-hop"
+        ],
+         "image": "https://www.lavoz.com.ar/resizer/2IJ2fSitx6xjHGeuUtmVo4aEBSE=/0x0:0x0/980x640/filters:quality(80):format(webp)/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/2XY5CYWGABFCTGB4OQAXG3LXUM.gif"
+    },
+    {
+        "url": "./Musica/2.mp3",
+        "title": "Los Ángeles Azules, Emilia - Perdonarte ¿Para Qué?",
+        "tags": [
+            "Urbano y pop latino"
+        ],
+         "image": "https://i.pinimg.com/originals/49/c0/1b/49c01bacaf8ee52e51dba2e3798be944.jpg"
+    },
+    {
+        "url": "./Musica/3.mp3",
+        "title": "Luck Ra, Khea - Hola perdida",
+        "tags": [
+            "Pop Urbano"
+        ],
+         "image": "https://fmlike.com.ar/wp-content/uploads/2024/01/WhatsApp-Image-2024-01-08-at-15.33.14.jpeg"
+    },
+    {
+        "url": "./Musica/9.mp3",
+        "title": "Bauti Mascia, Cele Arrabal - Ya no me duele",
+        "tags": ["Pop Urbano"],
+      "image": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/ce/db/f2/cedbf2d5-a807-3115-7766-da45ba516f26/5054197935602.jpg/316x316bb.webp"
+      }
+]

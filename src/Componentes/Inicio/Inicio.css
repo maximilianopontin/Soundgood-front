@@ -1,0 +1,88 @@
+.home{
+    margin-top: 100px;
+}/* Estilo para la superposición del modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro con opacidad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+    font-family: inherit;
+}
+
+/* Estilo para el contenedor del modal */
+.Modal-playlist {
+    background-color: #fff; /* Fondo blanco para el modal */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 20px;
+    width: 300px; /* Ancho del modal */
+    text-align: center; /* Centrar texto */
+}
+
+/* Estilo para el título del modal */
+.Modal-playlist h2 {
+    margin-bottom: 20px; /* Espaciado inferior */
+    color:#021a01 ; /* Color del texto */
+}
+
+/* Estilo para el dropdown */
+.modal-select-playlist {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 20px; /* Espaciado inferior */
+    border: 1px solid #5fa25b; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+background-color: #5fa25b ;
+color:white;
+}
+
+
+/* Estilo para los botones */
+.modal-buttons {
+    display: flex;
+    justify-content: space-between; /* Espacio entre los botones */
+}
+
+.modal-buttons button {
+    padding: 10px 15px; /* Espaciado interno de los botones */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor a mano */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+.modal-buttons button:hover {
+    background-color: #f0f0f0; /* Cambiar fondo al pasar el ratón */
+}
+
+.modal-buttons button:nth-child(1) {
+    background-color: #5fa25b; /* Color de fondo del botón "Añadir" */
+    color: white; /* Color del texto */
+}
+
+.modal-buttons button:nth-child(2) {
+    background-color: #f44336; /* Color de fondo del botón "Cancelar" */
+    color: white; /* Color del texto */
+}
+
+.modal-buttons button:nth-child(1):hover {
+    background-color: #2b7427; /* Fondo más oscuro al pasar el ratón */
+}
+
+.modal-buttons button:nth-child(2):hover {
+    background-color: #cc2926; /* Fondo más oscuro al pasar el ratón */
+}
+
+
+.error-message {
+    color: rgb(241, 27, 27);
+    font-size: 14px;
+    margin-top: 20px;
+  
+}

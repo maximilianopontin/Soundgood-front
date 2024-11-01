@@ -1,0 +1,127 @@
+/* Estilos para las tarjetas de canciones */
+.song-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    min-width: 250px;
+    width: 270px; /* Ajusta el ancho de la tarjeta */
+    height: 350px; /* Ajusta la altura de la tarjeta */
+    box-sizing: border-box;
+}
+
+.song-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.song-card h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+    font-family: inherit;
+}
+
+.song-card p {
+    margin: 0.5em 0;
+    color: #666;
+    font-size: 0.9em;
+}
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.artist-image {
+    max-width: 100%;
+    max-height: 150px;
+    width: 180px; /* Ajusta el ancho de la imagen */
+    height: 150px; /* Ajusta la altura de la imagen */
+    object-fit: cover;
+    border-radius: 4px;
+}
+/* Contenedor para los botones */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Estilos para los botones */
+.favorite-button, .add-button {
+    background-color: #4caf50; /* Verde más claro para los botones */
+    color: white;
+    border-radius: 8px; /* Aumenta el radio de los bordes para que sean más redondeados */
+    padding: 15px 15px; /* Aumenta el padding para hacer los botones más grandes */
+    font-size: 1em; /* Aumenta el tamaño de la fuente para hacer el texto más grande */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Estilos para la lista de tarjetas */
+.song-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px;
+}
+
+.song-list div {
+    flex: 1 1 calc(33.333% - 32px);
+    max-width: calc(33.333% - 32px);
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .song-list div {
+        flex: 1 1 calc(50% - 16px);
+        max-width: calc(50% - 16px);
+    }
+}
+
+@media (max-width: 480px) {
+    .song-list div {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+/* Estilos para los títulos de secciones */
+.section-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffffff;
+    text-align:left;
+    margin: 26px ;
+}
+
+.favorite-button,
+.add-button {
+  background-color: #4caf50; /* Verde más claro para los botones */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.favorite-button:hover,
+.add-button:hover {
+  background-color: #215c24; /* Verde más oscuro al hacer hover */
+}
+
+.favorite-button:focus,
+.add-button:focus {
+  outline: none;
+}

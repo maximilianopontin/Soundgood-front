@@ -1,0 +1,160 @@
+.navbar {
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%; 
+    height: auto; /* El alto de la barra se ajusta automáticamente */
+    padding: 0.25% 2%; 
+    background-color: black; 
+    border-radius: 10px; 
+    position: fixed; /* Posición fija, siempre visible en la parte superior */
+    z-index: 1000; /* Coloca la barra encima de otros elementos para evitar que se superponga */
+}
+
+.nav-logo img {
+    width: 90px; 
+    height: auto; 
+}
+
+.nav-buscador {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    flex-grow: 1; /* El buscador se expande ocupando el espacio sobrante entre el logo y los enlaces */
+    justify-content: center; 
+    margin-left: 20px; 
+    margin-right: 20px; 
+}
+
+.nav-buscador input[type="text"] {
+    padding: 10px; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    width: 600px; 
+    max-width: 100%; 
+    margin-right: 10px;
+     } 
+
+.nav-buscador button {
+    background-color: #5FA25B; 
+    width: 150px; 
+    padding: 10px; 
+    font-size: 16px; 
+}
+
+.nav-links {
+    display: flex; 
+    align-items: center; 
+}
+
+.nav-links a {
+    color: rgb(255, 255, 255); 
+    text-decoration: none;
+    margin-left: 10px; 
+    padding: 10px; 
+    font-size: 16px; 
+ }
+
+/* Medias para pantallas más pequeñas */
+
+/* Pantallas menores a 1200px */
+@media screen and (max-width: 1200px) {
+    .nav-logo img {
+        width: 80px; 
+    }
+
+    .nav-buscador input[type="text"] {
+        width: 500px; 
+    }
+
+    .nav-buscador button {
+        width: 130px; 
+        padding: 8px; 
+        font-size: 14px; 
+    }
+
+    .nav-links a {
+        font-size: 14px; 
+    }
+}
+
+/* Pantallas menores a 992px */
+@media screen and (max-width: 992px) {
+    .nav-logo img {
+        width: 70px; 
+    }
+
+    .nav-buscador input[type="text"] {
+        width: 400px; 
+        font-size: 14px;
+        padding: 8px; 
+    }
+
+    .nav-buscador button {
+        width: 120px; 
+        padding: 8px; 
+        font-size: 14px; 
+    }
+
+    .nav-links a {
+        font-size: 14px; 
+    }
+}
+
+/* Pantallas menores a 768px */
+@media screen and (max-width: 768px) {
+    .nav-logo img {
+        width: 60px; 
+    }
+
+    .nav-buscador input[type="text"] {
+        width: 300px;
+        font-size: 14px;
+    }
+
+    .nav-buscador button {
+        width: 100px;
+        padding: 6px; 
+        font-size: 12px; 
+    }
+
+    .nav-links a {
+        font-size: 12px; 
+        padding: 8px; 
+    }
+}
+
+/* Media query para pantallas muy pequeñas (menores a 576px) */
+@media screen and (max-width: 576px) {
+    .nav-logo img {
+        width: 50px; 
+    }
+
+    .nav-buscador input[type="text"] {
+        width: 200px; 
+        padding: 6px; 
+        font-size: 12px; 
+    }
+
+    .nav-buscador button {
+        width: 90px; 
+        padding: 6px; 
+        font-size: 12px; 
+    }
+
+    .nav-links {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .nav-links a {
+        font-size: 12px; 
+        padding: 6px; 
+    }
+
+    .nav-links a:nth-child(2) {
+        margin-left: 0; 
+        margin-top: 5px; 
+    }
+}
