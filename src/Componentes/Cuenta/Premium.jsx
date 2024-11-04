@@ -32,7 +32,11 @@ function Premium() {
 
     const handleBuyingProcess = async () => {
         const id = await createPreference();
+        console.log('yo ando');
+        
         if (id) setPreferenceId(id);
+        console.log('yo andoooooo');
+
     };
 
     return (
