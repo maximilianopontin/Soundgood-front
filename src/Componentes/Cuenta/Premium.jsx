@@ -11,7 +11,7 @@ function Premium() {
     
     const createPreference = async () => {
         try {
-            const res = await fetch('https://soundgood-back.onrender.com/create-preference', {
+            const res = await fetch('https://soundgood-back.onrender.com/mercadopago/create-preference', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
