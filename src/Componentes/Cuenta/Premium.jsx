@@ -4,14 +4,14 @@ import { Nav } from "../Nav/Nav";
 import './EditarPerfil.css';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import './premium.css';
-
 function Premium() {
     const [preferenceId, setPreferenceId] = useState(null);
     initMercadoPago('APP_USR-7481233767070694-102420-be7e374961dd92e3cc39446b697d1e19-225509543', { locale: 'es-AR' });
-    
+    //'http://localhost:8080/mercadopago/create-preference'
+    //https://soundgood-back.onrender.com/mercadopago/create-preference
     const createPreference = async () => {
         try {
-            const res = await fetch('https://soundgood-back.onrender.com/mercadopago/create-preference', {
+            const res = await fetch('http://localhost:8080/mercadopago/create-preference', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -33,14 +33,14 @@ function Premium() {
             console.error(error.message);
         }
     };
-
     const handleBuyingProcess = async () => {
-        const response = await createPreference();        
+        const response = await createPreference();
         if (response && response.id) {
+            console.log(response)
             setPreferenceId(response.id);
+            window.open(`https://www.mercadopago.com.ar/checkout/v1/redirect?preference_id=${response.id}`, '_blank')
         }
     };
-
     return (
         <>
             <Nav className="nav-fixed" />
@@ -48,9 +48,9 @@ function Premium() {
                 <h2 className="premium-title">Sound Good Premium</h2>
                 <button className="premium-button" onClick={handleBuyingProcess}>Pagar con Mercado Pago</button>
                 {preferenceId && (
-                    <Wallet 
-                        initialization={{ preferenceId }} 
-                        customization={{ texts: { valueProp: 'smart_option' } }} 
+                    <Wallet
+                        initialization={{ preferenceId }}
+                        customization={{ texts: { valueProp: 'smart_option' } }}
                     />
                 )}
             </main>
@@ -58,5 +58,4 @@ function Premium() {
         </>
     );
 }
-
 export default Premium;
