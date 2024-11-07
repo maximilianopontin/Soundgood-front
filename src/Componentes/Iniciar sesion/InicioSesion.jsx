@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import logo from '../../logo/logo.png';
 import "./InicioSesion.css";
 import { useNavigate } from "react-router-dom";
@@ -7,22 +7,13 @@ export function PagInicioSesion() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [users, setUsers] = useState([]);
-
     const navigate = useNavigate();
 
-    useEffect(() => {
-        // Cargar el JSON de usuarios
-        fetch('/registro.json') // Ajusta la ruta según donde esté tu archivo JSON
-            .then(response => response.json())
-            .then(data => setUsers(data))
-            .catch(error => console.error('Error al cargar los datos de usuarios:', error));
-    }, []);
-
-    // Validamos que la contraseña cumpla con las condiciones dadas.
-    const handleFormSubmit = (e) => {
+    // Función para manejar el envío del formulario
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
+        // Validamos email y contraseña
         if (!validateEmail(email)) {
             setErrorMessage('El email debe ser válido.');
             return;
@@ -33,64 +24,74 @@ export function PagInicioSesion() {
             return;
         }
 
-        const user = users.find(user => user.email === email);
+        try {
+            const response = await fetch('http://localhost:8080/autenticacion/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    contraseña: password,  // Asegúrate de usar el campo correcto 'contraseña'
+                }),
+            });
 
-        if (user) {
-            if (user.contraseña === password) {
+            // Si la respuesta es exitosa (código 200), obtén el token
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('access_token', data.access_token); // Guarda el token
                 clearForm();
-                navigate("/home");
+                navigate("/home");  // Redirige a la página principal
             } else {
-                setErrorMessage('La contraseña es incorrecta.');
+                const data = await response.json();
+                setErrorMessage(data.message || 'Error al iniciar sesión. Inténtalo nuevamente.'); // Muestra el mensaje de error
             }
-        } else {
-            setErrorMessage('El email no coincide con ningún usuario registrado.');
+        } catch (error) {
+            console.error('Error en la solicitud de login:', error);
+            setErrorMessage('Error al intentar iniciar sesión. Inténtalo nuevamente.');
         }
-    }
+    };
 
-    // Validamos si la contraseña está bien o mal
-    const handlePasswordChange = (e) => {
-        const newPassword = e.target.value;
-        setPassword(newPassword);
-        if (validatePassword(newPassword)) {
-            setErrorMessage('');
-        } else {
-            setErrorMessage('La contraseña debe tener al menos una mayúscula, un número y un símbolo.');
-        }
-    }
-
-    // Validamos si el email cumple con las condiciones
-    const handleEmailChange = (e) => {
-        const newEmail = e.target.value;
-        setEmail(newEmail);
-        setErrorMessage('');
-    }
-
-    // Validación para las condiciones de la contraseña
+    // Validación para la contraseña
     const validatePassword = (password) => {
         const conditionPassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         return conditionPassword.test(password);
-    }
+    };
 
     // Validación para el email
     const validateEmail = (email) => {
         const conditionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return conditionEmail.test(email);
-    }
+    };
 
     // Limpiar el formulario
     const clearForm = () => {
         setEmail('');
         setPassword('');
         setErrorMessage('');
-    }
+    };
 
     return (
         <div>
             <img src={logo} alt="Logo" className="Logo" />
             <form className="form" onSubmit={handleFormSubmit}>
-                <input type="text" name="email" placeholder="Email" value={email} onChange={handleEmailChange} required />
-                <input type="password" name="password" placeholder="Contraseña" value={password} onChange={handlePasswordChange} required />
-                <button type="submit">Iniciar sesión</button> 
+                <input 
+                    type="text" 
+                    name="email" 
+                    placeholder="Email" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    required 
+                />
+                <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Contraseña" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    required 
+                />
+                <button type="submit">Iniciar sesión</button>
                 <div className="error-message">
                     {errorMessage ? errorMessage : ""}
                 </div>
