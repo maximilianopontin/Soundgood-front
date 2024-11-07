@@ -54,7 +54,6 @@ export function PagRegistro() {
                 })
             });
             const data = await response.json(); 
-            console.log(data);
             
             if (response.status === 201) {
                 clearForm();
@@ -62,9 +61,7 @@ export function PagRegistro() {
             } else {
                 setErrorMessage(data.message || 'Error al registrar usuario. Inténtalo nuevamente.');
             }
-        } catch (error) {
-            console.log('error:', error);
-            
+        } catch (error) {            
             setErrorMessage('Error al registrar usuario. Inténtalo nuevamente.');
         }
     };

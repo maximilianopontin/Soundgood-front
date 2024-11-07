@@ -32,7 +32,7 @@ export function PagInicioSesion() {
                 },
                 body: JSON.stringify({
                     email,
-                    contraseña: password,  // Asegúrate de usar el campo correcto 'contraseña'
+                    contraseña: password,  
                 }),
             });
 
