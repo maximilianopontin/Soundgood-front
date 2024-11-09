@@ -1,5 +1,12 @@
+.container {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0 auto;
+    padding: 0;
+}
 .home{
     margin-top: 100px;
+  
 }/* Estilo para la superposición del modal */
 .modal-overlay {
     position: fixed;
