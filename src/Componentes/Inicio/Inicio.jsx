@@ -87,29 +87,6 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
         }
     };
 
-    /*  const handleAddToPlaylist = () => {
-          if (selectedPlaylist) {
-              // Verifica si la playlist seleccionada ya tiene la canción actual
-              //Usamos el método some para verificar si alguna de las canciones en la playlist seleccionada 
-              //tiene el mismo url que la canción actual (currentSong).
-              const playlistSongs = playlists[selectedPlaylist];
-              const isSongInPlaylist = playlistSongs.some(song => song.url === currentSong);
-  
-              if (isSongInPlaylist) {
-                  setErrorMessage('Esta canción ya está en esa playlist.');
-              } else {
-                  // Si no está en la playlist, la añade
-                  addSongToPlaylist(currentSong, selectedPlaylist);
-                  console.log(`Canción añadida: ${currentSong}`);
-                  console.log('Canciones en la playlist:', playlists[selectedPlaylist]);
-                  closeModal();
-              }
-          } else {
-              setErrorMessage('Por favor selecciona una playlist.');
-          }
-      };*/
-
-
     const settings = {
         dots: true,
         infinite: true,
