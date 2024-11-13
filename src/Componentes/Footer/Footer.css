@@ -1,6 +1,6 @@
 /* Footer principal */
 .footer {
-  @apply py-10 mb-4 mt-4  text-white;
+  @apply py-12 mb-16 mt-3  text-white;
 }
 
 /* Contenedor del footer */
@@ -63,10 +63,20 @@
 }
 
 @media (max-width: 480px) {
+  
+  .footer{
+    @apply mt-0 
+  }
   .footer-title {
-    @apply mb-0 ; /* Menor espacio entre títulos en pantallas pequeñas */
+    @apply mb-0 mt-0; /* Menor espacio entre títulos en pantallas pequeñas */
   }
   .footer-links  {
-      @apply mr-6 mb-3;
+      @apply mr-6 mb-4;
   }
 }
+
+
+
+
+
+
