@@ -4,7 +4,7 @@
     @apply mt-36;
 }
 .section-title {
-    @apply w-[200px] mb-40;
+    @apply w-[200px] mb-10;
 }
 .favorites-list,
 .playlist-list {

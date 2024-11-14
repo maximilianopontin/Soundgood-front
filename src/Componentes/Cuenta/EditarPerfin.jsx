@@ -60,7 +60,7 @@ function EditaPerfil() {
             </div>
             <div className="container-editar-perfil">
 
-                <h1>Editar perfil</h1>
+                <h1 className='editar-perfil'>Editar perfil</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Nombre:</label>
