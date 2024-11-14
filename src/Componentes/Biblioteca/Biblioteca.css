@@ -4,11 +4,11 @@
     @apply mt-36;
 }
 .section-title {
-    @apply w-[200px];
+    @apply w-[200px] mb-40;
 }
 .favorites-list,
 .playlist-list {
-    @apply flex flex-col gap-1 items-start mb-10 w-[370px];
+    @apply flex flex-col gap-1 items-start  w-[370px];
 }
 
 .favorite-item,
@@ -29,7 +29,7 @@
 }
 
 .modal-playlist {
-    @apply fixed top-14 w-full h-2/5 flex justify-center items-center z-[1000];
+    @apply fixed top-14 w-full h-2/5 flex justify-center items-center z-[1000] ;
 }
 
 .modal-content-playlist {
