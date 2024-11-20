@@ -22,7 +22,7 @@ function App() {
 
         
         <Router>
-            <div className='bg-black'>
+            <div className='bg-black h-full'>
                 <Routes>
                     <Route path="/" element={<PagInicio />} />
                     <Route path="/inicio-sesion" element={<PagInicioSesion/>}/>

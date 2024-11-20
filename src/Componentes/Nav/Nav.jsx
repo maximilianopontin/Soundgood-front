@@ -2,18 +2,24 @@ import { Logo } from "../../logo/logo";
 import './Nav.css';
 import './modal.css';
 import { useState, useEffect } from "react";
-import ReproductorNav from "../Reproductor musica/ReproductorBuscador";
+import ReproductorBuscador from "../Reproductor musica/ReproductorBuscador";
 import { Link } from "react-router-dom";
 import { SongCard } from '../Inicio/Card';
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import { usePlayer } from '../Reproductor musica/PlayerContext';
- 
+
+const Song = {
+    url: '',
+    title: '',
+    tags: []
+};
+
 export const Nav = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [isSearchModalOpen, setSearchModalOpen] = useState(false);  // Modal de búsqueda
     const [isPlaylistModalOpen, setPlaylistModalOpen] = useState(false); // Modal de agregar a playlist
-    const [songUrlReproductor, setSongUrlReproductor] = useState(null);
+    const [songUrlReproductor, setSongUrlReproductor] = useState(Song);
     const [top50Tracks, setTop50Tracks] = useState([]);
     const [cancionesTracks, setCancionesTracks] = useState([]);
     const { addFavorite, addSongToPlaylist, playlists } = useFavorites();
@@ -60,9 +66,9 @@ export const Nav = () => {
         }
     };
 
-    const handleSongSelec = (url) => {
-        setSongUrlReproductor(url);
-        setCurrentSong(url); // Establece la canción en el contexto
+    const handleSongSelec = (song) => {
+        setSongUrlReproductor({...song});
+        setCurrentSong(song.url); // Establece la canción en el contexto
         setSearchModalOpen(false); // Cierra el modal de búsqueda
         setPlaylistModalOpen(false); // Cierra el modal de playlist, si está abierto
     };
@@ -136,7 +142,7 @@ export const Nav = () => {
                                         image={song.image}
                                         artist={song.artist}
                                         tags={song.tags || []}
-                                        onClick={() => handleSongSelec(song.url)}
+                                        onClick={() => handleSongSelec(song)}
                                         onFavorite={() => handleFavorite(song)}
                                         onAddToPlaylist={() => openPlaylistModal(song)}  // Abre el modal de playlist
                                     />
@@ -170,7 +176,7 @@ export const Nav = () => {
                     </div>
                 </div>
             )}
-            <ReproductorNav songUrl={songUrlReproductor} />
+            <ReproductorBuscador songUrl={songUrlReproductor.url} title={songUrlReproductor.title} tags={songUrlReproductor.tags} />
         </nav>
     );
 };

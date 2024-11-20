@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import Canciones from "@madzadev/audio-player";
-import './Reproductor.css';
-import { usePlayer } from './PlayerContext';
+import "./Reproductor.css";
 
-const colors = { // colores personalizados que se usarán para estilizar el componente de audio Canciones.
+// Colores personalizados para estilizar el componente de audio
+const colors = {
   tagsBackground: "#5fa25b",
   tagsText: "#ffffff",
   tagsBackgroundHoverActive: "#5fa25b",
@@ -27,52 +27,40 @@ const colors = { // colores personalizados que se usarán para estilizar el comp
   playlistTextHoverActive: "#ffffff",
 };
 
-function Reproductor({ songUrl}) {
-  const { currentSong } = usePlayer();
-  const [Top50Tracks, setTop50Tracks] = useState([]); //useState se utiliza para crear una variable de estado llamada tracks y una función setTracks para actualizar esta variable. Inicialmente, tracks es un array vacío.
-  const [CancionesTracks, setCancionesTracks] = useState([]);
-  const [currentTrack, setCurrentTrack] = useState(null); //estado para la lista actual, la que se va a seccionar en el buscador
-  
-  useEffect(() => {
-    fetch('/CancionesTop50.json')
-      .then(response => response.json()) //convierte la respuesta en un objeto JavaScript.
-      .then(data => setTop50Tracks(data)) //actualiza la variable de estado tracks con los datos obtenidos.
-      .catch(error => console.error('Error loading the tracks:', error));
-  }, []);
+function ReproductorBuscador({ songUrl, title, tags }) {
+  const [tracks, setTracks] = useState([]); // Lista de pistas
 
+  // Actualiza las pistas cada vez que songUrl, title o tags cambien
   useEffect(() => {
-    fetch('/Canciones.json')
-      .then(response => response.json())
-      .then(data => setCancionesTracks(data))
-      .catch(error => console.error('Error loading the otra lista tracks:', error));
-  }, []);
-
-  //Actualizar la pista actual
-  useEffect(() =>{
-    if (currentSong) {
-      const selecTrack = [...Top50Tracks, ...CancionesTracks].find(track => track.url === currentSong);
-      // ahora se busca la canción seleccionada dentro de la concatenación de ambas listas
-      setCurrentTrack(selecTrack);
+    if (songUrl) {
+      setTracks([
+        {
+          url: songUrl,
+          title: title || "Título desconocido", // Título por defecto si no se pasa
+          tags: tags || [], // Tags vacíos si no se pasan
+        },
+      ]);
     }
-  }, [currentSong, Top50Tracks,CancionesTracks]);//Si songUrl está presente, busca la pista correspondiente en tracks y actualiza currentTrack con la pista seleccionada.
+  }, [songUrl, title, tags]); // Dependencias
+
+  console.log(tracks);
 
   return (
     <div className="reproductor">
-    { currentTrack && ( 
-      <Canciones
-        key={currentTrack.url} //  asegurarnos de que el componente se remonte cuando la URL de la pista cambie. 
-          //Esto forzará una actualización completa del componente Canciones.
-        trackList= {[currentTrack]}//pasa la pista seleccionada al reproductor Anteriormente estaba "tracks"
-        includeTags={false}
-        includeSearch={false}
-        showPlaylist={false}
-        sortTracks={true}
-        autoPlayNextTrack={true}
-        customColorScheme={colors} />
-
+      {tracks.length > 0 && (
+        <Canciones
+          key={tracks[0].url}
+          trackList={tracks} // Lista de pistas
+          includeTags={false}
+          includeSearch={false}
+          showPlaylist={false}
+          sortTracks={true}
+          autoPlayNextTrack={true}
+          customColorScheme={colors}
+        />
       )}
     </div>
-  )
-};
+  );
+}
 
-export default Reproductor;
+export default ReproductorBuscador;

@@ -25,7 +25,7 @@ function PagInicio() {
             </div>
 
             <div>
-                <Reproductor />
+                <Reproductor isDemo={true} songs={[]} />
             </div>
 
         </div>

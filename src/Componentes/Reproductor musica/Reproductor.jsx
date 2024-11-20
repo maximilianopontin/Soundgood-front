@@ -27,15 +27,19 @@ const colors = { // colores personalizados que se usarán para estilizar el comp
   playlistTextHoverActive: "#ffffff",
 };
 
-function Reproductor() {
+function Reproductor({isDemo, songs}) {
   const { currentSong } = usePlayer(); // Obtén la canción actual desde el contexto
   const [tracks, setTracks] = useState([]);
 
   useEffect(() => {
-    fetch('/Canciones.json')
-      .then(response => response.json())
-      .then(data => setTracks(data))
-      .catch(error => console.error('Error loading the tracks:', error));
+    if (!isDemo) {
+      setTracks(songs);
+    } else {
+      fetch('/Canciones.json')
+        .then(response => response.json())
+        .then(data => setTracks(data))
+        .catch(error => console.error('Error loading the tracks:', error));
+    }
   }, []);
 
   useEffect(() => {

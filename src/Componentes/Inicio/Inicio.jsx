@@ -6,17 +6,23 @@ import './Inicio.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Nav } from "../Nav/Nav";
-import Reproductor from '../Reproductor musica/ReproductorBuscador';
+import ReproductorBuscador from '../Reproductor musica/ReproductorBuscador';
 import Footer from "../Footer/Footer";
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Establece el elemento raíz para accesibilidad
 import { usePlayer } from '../Reproductor musica/PlayerContext';
 
+const Song = {
+    url: '',
+    title: '',
+    tags: []
+};
+
 export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVersionGratuita, redirectToAyudas }) {
     const [songsTop50, setSongsTop50] = useState([]);
     const [songsTendencias, setSongsTendencias] = useState([]);
-    const [selectedSongUrl, setSelectedSongUrl] = useState(null);
+    const [selectedSongUrl, setSelectedSongUrl] = useState(Song);
     const { addFavorite, addSongToPlaylist, playlists } = useFavorites();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [playlistName, setPlaylistName] = useState('');
@@ -131,7 +137,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                             tags={song.tags}
                             url={song.url}
                             onClick={() => {
-                                setSelectedSongUrl(song.url);
+                                setSelectedSongUrl({url:song.url, title:song.title, tags:song.tags});
                                 setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
                             }}
                             onFavorite={() => addFavorite(song)}
@@ -150,7 +156,8 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                             url={song.url}
                             artist={song.artist}
                             onClick={() => {
-                                setSelectedSongUrl(song.url);
+                                setSelectedSongUrl({url:song.url, title:song.title, tags:song.tags});
+
                                 setCurrentSong(song.url);
                             }}
                             onFavorite={() => addFavorite(song)}
@@ -159,7 +166,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
 
                     ))}
                 </Slider>
-                {selectedSongUrl && <Reproductor songUrl={selectedSongUrl} />}
+                {selectedSongUrl.url && <ReproductorBuscador songUrl={selectedSongUrl.url} title={selectedSongUrl.title} tags={selectedSongUrl.tags} />}
                 <Footer
                     redirectToAcercaDe={redirectToAcercaDe}
                     redirectToPlanPremium={redirectToPlanPremium}

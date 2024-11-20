@@ -1,7 +1,7 @@
 
   
   .home {
-    @apply mt-24;
+    @apply mt-24 max-h-1.5;
   }
   
   /* Estilo para la superposición del modal */

@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  @apply text-white bg-black antialiased [font-family:Inter,system-ui,Avenir,Helvetica,Arial,sans-serif] text-[rgba(255,255,255,0.87)] dark:[color-scheme:dark] font-light;
+#root {
+  @apply h-[100vh] text-white bg-black antialiased [font-family:Inter,system-ui,Avenir,Helvetica,Arial,sans-serif] text-[rgba(255,255,255,0.87)] dark:[color-scheme:dark] font-light;
   line-height: 1.5;
 }
 

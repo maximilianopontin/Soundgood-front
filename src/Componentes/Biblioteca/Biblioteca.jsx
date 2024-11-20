@@ -3,14 +3,20 @@ import "./Biblioteca.css";
 import { Nav } from '../Nav/Nav';
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import '../Inicio/card.css';
-import Reproductor from '../Reproductor musica/ReproductorBuscador';
+import ReproductorBuscador from '../Reproductor musica/ReproductorBuscador';
 import Footer from '../Footer/Footer';
 import { SongCard } from '../Inicio/Card';
 import { usePlayer } from '../Reproductor musica/PlayerContext'; // Importa el contexto del reproductor
 
+const Song = {
+    url: '',
+    title: '',
+    tags: []
+};
+
 export function Biblioteca() {
     const { favorites, playlists, createPlaylist } = useFavorites(); // Usa el contexto de favoritos
-    const [selectedSong, setSelectedSong] = useState(null); // Canción seleccionada actualmente.
+    const [selectedSong, setSelectedSong] = useState(Song); // Canción seleccionada actualmente.
     const [playlistName, setPlaylistName] = useState(''); // Nombre de la nueva lista de reproducción que se está creando.
     const [showModal, setShowModal] = useState(false); // Booleano para mostrar u ocultar el modal de creación de listas de reproducción.
     const [selectedPlaylist, setSelectedPlaylist] = useState(null); // Lista de reproducción seleccionada actualmente.
@@ -27,7 +33,7 @@ export function Biblioteca() {
 
     const handleSongClick = (song) => {
         if (song && song.url) {
-            setSelectedSong(song); // Guarda la canción seleccionada localmente
+            setSelectedSong({ ...song }); // Guarda la canción seleccionada localmente
             setCurrentSong(song.url); // Actualiza la canción en el reproductor global
             console.log("Canción seleccionada:", song);
         } else {
@@ -38,11 +44,9 @@ export function Biblioteca() {
 
     return (
         <>
-            <div>
-                <Nav />
-            </div>
+            <Nav />
             <div className="biblioteca">
-                <div class="flex justify-center">
+                <div className="flex justify-center">
                     <button className="create-playlist-button" onClick={() => setShowModal(true)}>Crear Playlist</button>
                 </div>
                 <p className="section-title">Tus favoritos</p>
@@ -88,6 +92,7 @@ export function Biblioteca() {
                     </div>
                 )}
 
+                {/* Ver si hay elementos dentro de la playlist seleccionada */}
                 {selectedSong && (
                     <div className="card-playlist">
                         <SongCard
@@ -97,9 +102,7 @@ export function Biblioteca() {
                             image={selectedSong.image}
                             artist={selectedSong.artist}
                         />
-                        <div>
-                            <Reproductor /> {/* No es necesario pasar songUrl aquí */}
-                        </div>
+                        <ReproductorBuscador songUrl={selectedSong.url} title={selectedSong.title} tags={selectedSong.tags} />
                     </div>
                 )}
                 <Footer />
