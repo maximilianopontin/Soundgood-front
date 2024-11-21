@@ -20,7 +20,7 @@ const Song = {
 };
 
 export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVersionGratuita, redirectToAyudas }) {
-    const [songsTop50, setSongsTop50] = useState([]);
+    const [songsTop10, setSongsTop10] = useState([]);
     const [songsTendencias, setSongsTendencias] = useState([]);
     const [selectedSongUrl, setSelectedSongUrl] = useState(Song);
     const { addFavorite, addSongToPlaylist, playlists } = useFavorites();
@@ -39,7 +39,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                 return response.json();
             })
             .then(data => {
-                setSongsTop50(data[0].cancionId);
+                setSongsTop10(data[0].cancionId);
             })
             .catch(error => {
                 console.error('Error cargando las canciones:', error);
@@ -47,7 +47,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
     }, []);
 
     useEffect(() => {
-        fetch('/Tendencias.json')
+        fetch('http://localhost:8080/tendencias')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('La respuesta de la red no fue exitosa');
@@ -55,7 +55,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                 return response.json();
             })
             .then(data => {
-                setSongsTendencias(data);
+                setSongsTendencias(data[0].cancionId);
             })
             .catch(error => {
                 console.error('Error cargando las canciones:', error);
@@ -81,7 +81,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
             if (isSongInPlaylist) {
                 setErrorMessage('Esta canción ya está en esa playlist.');
             } else {
-                const currentSongData = songsTop50.find(song => song.url === currentSong) || songsTendencias.find(song => song.url === currentSong);
+                const currentSongData = songsTop10.find(song => song.url === currentSong) || songsTendencias.find(song => song.url === currentSong);
                 if (currentSongData) {
                     addSongToPlaylist(currentSongData, selectedPlaylist); // Agrega el objeto completo de la canción
                     console.log(`Canción añadida: ${currentSong}`);
@@ -127,7 +127,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
             <div className="home">
                 <p className="section-title">Top 10</p>
                 <Slider {...settings}>
-                    {songsTop50.map((song, index) => (
+                    {songsTop10.map((song, index) => (
                         <SongCard
                             key={index}
                             image={'http://localhost:8080/files/image/' + song.imageFilename}
@@ -148,13 +148,13 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                     {songsTendencias.map((song, index) => (
                         <SongCard
                             key={index}
-                            image={song.image}
-                            title={song.title}
-                            tags={song.tags}
-                            url={song.url}
-                            artist={song.artist}
+                            image={'http://localhost:8080/files/image/' + song.imageFilename}
+                            title={song.titulo}
+                            tags={[song.genero]}
+                            url={'http://localhost:8080/files/song/' + song.songFilename}
+                            artist={[song.artistas.nombre]}
                             onClick={() => {
-                                setSelectedSongUrl({ url: song.url, title: song.title, tags: song.tags });
+                                setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero], artist: [song.artistas]});
 
                                 setCurrentSong(song.url);
                             }}
