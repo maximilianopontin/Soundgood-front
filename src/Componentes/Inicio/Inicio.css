@@ -1,7 +1,7 @@
 
   
   .home {
-    @apply mt-24 max-h-1.5;
+    @apply mt-24 bg-black;
   }
   
   /* Estilo para la superposición del modal */
@@ -11,7 +11,7 @@
   
   /* Estilo para el contenedor del modal */
   .Modal-playlist {
-    @apply bg-white p-5 rounded-lg w-[300px] max-w-[80%] max-h-[90vh] overflow-y-auto text-center;
+    @apply bg-white p-5 rounded-lg w-[300px] max-w-[80%] max-h-[90vh] overflow-y-auto text-center ;
   
   }
   

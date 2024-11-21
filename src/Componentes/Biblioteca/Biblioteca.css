@@ -1,7 +1,7 @@
 /* Archivo: styles.css */
 
 .biblioteca {
-    @apply mt-36;
+    @apply mt-36 bg-black;
 }
 .section-title {
     @apply w-[200px] mb-10;
@@ -42,7 +42,7 @@
 }
 
 .modal-content-playlist {
-    @apply bg-white p-5 rounded-lg w-[300px] max-w-[80%] max-h-[90vh] overflow-y-auto text-center;
+    @apply bg-white p-5 rounded-lg w-[300px] max-w-[80%] max-h-[90vh] overflow-y-auto text-center text-black;
 }
 
 .modal-content-playlist h3 {
