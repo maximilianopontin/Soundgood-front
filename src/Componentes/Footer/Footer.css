@@ -1,6 +1,6 @@
 /* Footer principal */
 .footer {
-  @apply py-12 mb-16 mt-3  text-white;
+  @apply py-12 mb-16 mt-3  text-white bg-black;
 }
 
 /* Contenedor del footer */

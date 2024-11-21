@@ -1,7 +1,7 @@
 /* Archivo CSS usando @apply en Tailwind con clases responsivas */
 
 .cuenta {
-    @apply mt-36;
+    @apply mt-24;
 }
 
 .cuenta-btn {

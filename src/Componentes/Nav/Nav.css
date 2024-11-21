@@ -12,7 +12,7 @@
 }
 
 .nav-buscador input[type="text"] {
-    @apply p-3 rounded text-base w-[700px] max-w-full mr-3;
+    @apply p-3 rounded text-base w-[700px] max-w-full mr-3 text-black;
 }
 
 .nav-buscador button {

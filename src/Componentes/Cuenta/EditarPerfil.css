@@ -1,7 +1,7 @@
 /* Archivo CSS usando @apply en Tailwind con clases responsivas */
 
 .container-editar-perfil {
-  @apply w-11/12 max-w-3xl mx-auto p-12 rounded-lg h-1/2 mt-24 text-left;
+  @apply w-11/12 max-w-3xl mx-auto p-12 rounded-lg h-auto mt-24 text-left;
 }
 .editar-perfil{
   @apply text-white;
@@ -24,7 +24,7 @@ label {
 }
 
 form {
-  @apply flex flex-col;
+  @apply flex flex-col text-black;
 }
 
 .input-editar-Perfil {
