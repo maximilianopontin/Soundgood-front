@@ -1,6 +1,6 @@
 /* Estilos para pantallas de escritorio (default) */
 .navbar {
-    @apply flex flex-row justify-between items-center w-full h-auto py-4 px-8 bg-black rounded-lg fixed top-0 z-[1000];
+    @apply flex flex-row justify-between items-center w-full h-auto py-4 px-8 bg-black rounded-lg;
 }
 
 .nav-logo img {

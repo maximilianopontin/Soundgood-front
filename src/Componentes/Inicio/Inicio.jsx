@@ -31,7 +31,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
     const { currentSong, setCurrentSong } = usePlayer();
 
     useEffect(() => {
-        fetch('/CancionesTop50.json')
+        fetch('http://localhost:8080/top10')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('La respuesta de la red no fue exitosa');
@@ -39,7 +39,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                 return response.json();
             })
             .then(data => {
-                setSongsTop50(data);
+                setSongsTop50(data[0].cancionId);
             })
             .catch(error => {
                 console.error('Error cargando las canciones:', error);
@@ -123,21 +123,19 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
 
     return (
         <>
-            <div>
-                <Nav />
-            </div>
+            <Nav />
             <div className="home">
                 <p className="section-title">Top 10</p>
                 <Slider {...settings}>
                     {songsTop50.map((song, index) => (
                         <SongCard
                             key={index}
-                            image={song.image}
-                            title={song.title}
-                            tags={song.tags}
-                            url={song.url}
+                            image={'http://localhost:8080/files/image/' + song.imageFilename}
+                            title={song.titulo}
+                            tags={[song.genero]}
+                            url={'http://localhost:8080/files/song/' + song.songFilename}
                             onClick={() => {
-                                setSelectedSongUrl({url:song.url, title:song.title, tags:song.tags});
+                                setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero] });
                                 setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
                             }}
                             onFavorite={() => addFavorite(song)}
@@ -156,7 +154,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                             url={song.url}
                             artist={song.artist}
                             onClick={() => {
-                                setSelectedSongUrl({url:song.url, title:song.title, tags:song.tags});
+                                setSelectedSongUrl({ url: song.url, title: song.title, tags: song.tags });
 
                                 setCurrentSong(song.url);
                             }}
@@ -199,7 +197,6 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                         </div>
                     </div>
                 </Modal>
-
             </div>
         </>
     );
