@@ -6,8 +6,9 @@ import '../Inicio/card.css';
 import ReproductorBuscador from '../Reproductor musica/ReproductorBuscador';
 import Footer from '../Footer/Footer';
 import { SongCard } from '../Inicio/Card';
-import { usePlayer } from '../Reproductor musica/PlayerContext'; // Importa el contexto del reproductor
-
+import { usePlayer } from '../Reproductor musica/PlayerContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 const Song = {
     url: '',
     title: '',
@@ -15,7 +16,7 @@ const Song = {
 };
 
 export function Biblioteca() {
-    const { favorites, playlists, createPlaylist } = useFavorites(); // Usa el contexto de favoritos
+    const { favorites, playlists, createPlaylist, removeFavorite, removeSongFromPlaylist } = useFavorites(); // Incluye métodos de eliminación
     const [selectedSong, setSelectedSong] = useState(Song); // Canción seleccionada actualmente.
     const [playlistName, setPlaylistName] = useState(''); // Nombre de la nueva lista de reproducción que se está creando.
     const [showModal, setShowModal] = useState(false); // Booleano para mostrar u ocultar el modal de creación de listas de reproducción.
@@ -41,7 +42,6 @@ export function Biblioteca() {
         }
     };
 
-
     return (
         <>
             <Nav />
@@ -54,13 +54,24 @@ export function Biblioteca() {
                 <div className="favorites-list">
                     {favorites.map((song, index) => (
                         <div key={index} className="favorite-item" onClick={() => handleSongClick(song)}>
-                            <p>{song.title}</p>
+                            <p>{song.title}
+                            </p>
+                            <button
+                                className="remove-button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeFavorite(song); // Llama a la función de eliminar favoritos
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faMinus} />
+                            </button>
+
+
                         </div>
                     ))}
                 </div>
                 <p className="section-title">Tus Playlists</p>
                 {/* Muestra las listas de reproducción */}
-
                 {Object.keys(playlists).map((name, index) => (
                     <div key={index}>
                         <h3 className="playlist-title" onClick={() => setSelectedPlaylist(name)}>{name}</h3>
@@ -69,7 +80,21 @@ export function Biblioteca() {
                                 {playlists[name].map((song, songIndex) => (
                                     <div key={songIndex} className="playlist-item" onClick={() => handleSongClick(song)}>
                                         <p>{songIndex + 1}. {song.title}</p>
+                                        <button
+                                            className="remove-button"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                removeSongFromPlaylist(name, song); // Llama a la función de eliminar canciones de la playlist
+                                            }}
+                                        >
+                                            <FontAwesomeIcon icon={faMinus} />
+                                        </button>
+
                                     </div>
+
+
+
+
                                 ))}
                             </div>
                         )}

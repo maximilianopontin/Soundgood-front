@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 import './card.css';
 
 export function SongCard({ url, title, tags= [], onClick, image, artist, onFavorite, onAddToPlaylist }) {
@@ -36,6 +36,8 @@ export function SongCard({ url, title, tags= [], onClick, image, artist, onFavor
                 >
                     <FontAwesomeIcon icon={faPlus} />
                 </button>
+                
+
             </div>
         </div>
     );

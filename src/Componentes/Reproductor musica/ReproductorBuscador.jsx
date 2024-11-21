@@ -43,7 +43,6 @@ function ReproductorBuscador({ songUrl, title, tags }) {
     }
   }, [songUrl, title, tags]); // Dependencias
 
-  console.log(tracks);
 
   return (
     <div className="reproductor">
