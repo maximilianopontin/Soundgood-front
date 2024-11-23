@@ -29,7 +29,8 @@ const colors = {
 };
 
 function Reproductor({ songUrl, title, tags, songs, isDemo }) {
-  const { currentSong } = usePlayer(); // Obtén la canción actual desde el contexto
+  //se manejan junto con songs (lista de canciones) para permitir múltiples formas de cargar canciones.La prop isDemo permite cargar canciones desde un archivo local (Canciones.json).
+  const { currentSong } = usePlayer(); // Obtiene desde un contexto para marcar la canción que se está reproduciendo actualmente.
   const [tracks, setTracks] = useState([]);
 
   // Cargar canciones según props o desde un archivo local
