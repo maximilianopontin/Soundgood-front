@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Canciones from "@madzadev/audio-player";
-import "./Reproductor.css";
+import './Reproductor.css';
+import { usePlayer } from './PlayerContext';
 
-// Colores personalizados para estilizar el componente de audio
-const colors = {
+const colors = { // colores personalizados que se usarán para estilizar el componente de audio Canciones.
   tagsBackground: "#5fa25b",
   tagsText: "#ffffff",
   tagsBackgroundHoverActive: "#5fa25b",
@@ -27,29 +27,36 @@ const colors = {
   playlistTextHoverActive: "#ffffff",
 };
 
-function ReproductorBuscador({ songUrl, title, tags }) {
-  const [tracks, setTracks] = useState([]); // Lista de pistas
+function Reproductor({isDemo, songs}) {
+  const { currentSong } = usePlayer(); // Obtén la canción actual desde el contexto
+  const [tracks, setTracks] = useState([]);
 
-  // Actualiza las pistas cada vez que songUrl, title o tags cambien
   useEffect(() => {
-    if (songUrl) {
-      setTracks([
-        {
-          url: songUrl,
-          title: title || "Título desconocido", // Título por defecto si no se pasa
-          tags: tags || [], // Tags vacíos si no se pasan
-        },
-      ]);
+    if (!isDemo) {
+      setTracks(songs);
+    } else {
+      fetch('/Canciones.json')
+        .then(response => response.json())
+        .then(data => setTracks(data))
+        .catch(error => console.error('Error loading the tracks:', error));
     }
-  }, [songUrl, title, tags]); // Dependencias
+  }, []);
 
+  useEffect(() => {
+    if (currentSong && tracks.length > 0) {
+      const updatedTracks = tracks.map(track => ({
+        ...track,
+        isPlaying: track.url === currentSong, // Marcar la canción actual como "isPlaying"
+      }));
+      setTracks(updatedTracks);
+    }
+  }, [currentSong]);
 
   return (
     <div className="reproductor">
       {tracks.length > 0 && (
         <Canciones
-          key={tracks[0].url}
-          trackList={tracks} // Lista de pistas
+          trackList={tracks}
           includeTags={false}
           includeSearch={false}
           showPlaylist={false}
@@ -62,4 +69,4 @@ function ReproductorBuscador({ songUrl, title, tags }) {
   );
 }
 
-export default ReproductorBuscador;
+export default Reproductor;
