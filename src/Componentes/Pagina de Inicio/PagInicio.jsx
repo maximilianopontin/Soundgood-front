@@ -1,7 +1,7 @@
 // en esta seccion se muestra la pagina de inicio para registro e inicio de seccion
 import React from "react";
 import logo from '../../logo/logo.png'
-import Reproductor from '../Reproductor musica/Reproductor';
+import Reproductor from '../Reproductor musica/ReproductorBuscador';
 import { Link } from "react-router-dom";
 import './PagInicio.css';
 
