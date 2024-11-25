@@ -205,7 +205,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
 
                                 setCurrentSong(song.url);
                             }}
-                            onFavorite={() => addFavorite(song)}
+                            onFavorite={() => addFavorites(song)}
                             onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
                         />
 
