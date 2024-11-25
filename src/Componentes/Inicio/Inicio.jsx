@@ -12,6 +12,7 @@ import { useFavorites } from '../Biblioteca/FavoritesContext';
 import Modal from 'react-modal';
 Modal.setAppElement('#root'); // Establece el elemento raíz para accesibilidad
 import { usePlayer } from '../Reproductor musica/PlayerContext';
+import Swal from "sweetalert2";
 
 const Song = {
     url: '',
@@ -40,6 +41,8 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
             })
             .then(data => {
                 setSongsTop10(data[0].cancionId);
+                console.log(data[0].cancionId);
+                
             })
             .catch(error => {
                 console.error('Error cargando las canciones:', error);
@@ -61,6 +64,50 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                 console.error('Error cargando las canciones:', error);
             });
     }, []);
+
+    const addFavorites = async (song) => {
+
+        const token = localStorage.getItem('access_token');
+
+        try {
+           const response = await fetch('http://localhost:8080/favoritos/agregar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    "usuarioId": 1,
+                    "cancionId": [
+                        song.cancionId
+                    ]
+                }),
+            });
+            if (response.ok) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Tu canción se agrego correctamente",
+                    showConfirmButton: false,
+                    timer: 2500
+                  });
+                console.log('todo anda bien por aca ');
+             
+
+            }
+           console.log(song.cancionId);
+           
+
+        } catch (error) {
+            console.error('Error en la solicitud de agregar favoritos', error);
+            setErrorMessage('Error al intentar agregra a favoritos. Inténtalo nuevamente.')
+
+        }
+
+    }
+
+
+
 
     const openModal = (song) => {
         setCurrentSong(song.url); // Establece la canción en el contexto
@@ -138,7 +185,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                                 setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero] });
                                 setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
                             }}
-                            onFavorite={() => addFavorite(song)}
+                            onFavorite={() => addFavorites(song)}
                             onAddToPlaylist={() => openModal(song)}
                         />
                     ))}
@@ -154,7 +201,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                             url={'http://localhost:8080/files/song/' + song.songFilename}
                             artist={[song.artistas.nombre]}
                             onClick={() => {
-                                setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero], artist: [song.artistas]});
+                                setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero], artist: [song.artistas] });
 
                                 setCurrentSong(song.url);
                             }}
