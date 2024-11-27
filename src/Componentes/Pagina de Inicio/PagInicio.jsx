@@ -11,27 +11,18 @@ function PagInicio() {
         <div className="h-full">
             <div className="h-3/4 flex flex-col items-center justify-center">
                 <img src={logo} alt="Logo" className="w-1/2 lg:w-1/5" />
-
-
                 <div className="flex">
                     <Link to="/inicio-sesion">
                         <button className="green-button">Iniciar sesión</button>
                     </Link>
-
                     <Link to="/registro">
                         <button className="green-button">Registrate</button>
                     </Link>
                 </div>
             </div>
-
-            <div>
-                <Reproductor isDemo={true} songs={[]} />
-            </div>
-
+            <Reproductor isDemo={true} songs={[]} />
         </div>
-
     );
-
 }
 
 export default PagInicio;

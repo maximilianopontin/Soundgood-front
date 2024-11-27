@@ -14,7 +14,7 @@ const Song = {
     tags: []
 };
 
-export const Nav = () => {
+export default function Nav() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [isSearchModalOpen, setSearchModalOpen] = useState(false);  // Modal de búsqueda
@@ -26,10 +26,10 @@ export const Nav = () => {
     const [playlistName, setPlaylistName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     //const [currentSong, setCurrentSong] = useState(null);
-    const { setCurrentSong} = usePlayer();
+    const { setCurrentSong } = usePlayer();
     const [selectedPlaylist, setSelectedPlaylist] = useState
-    (''); // Playlist seleccionada
-  
+        (''); // Playlist seleccionada
+
     useEffect(() => {
         fetch('/CancionesTop50.json')
             .then(response => response.json())
@@ -67,13 +67,13 @@ export const Nav = () => {
     };
 
     const handleSongSelec = (song) => {
-        setSongUrlReproductor({...song});
+        setSongUrlReproductor({ ...song });
         setCurrentSong(song.url); // Establece la canción en el contexto
         setSearchModalOpen(false); // Cierra el modal de búsqueda
         setPlaylistModalOpen(false); // Cierra el modal de playlist, si está abierto
     };
 
-   const handleAddToPlaylist = () => {
+    const handleAddToPlaylist = () => {
         if (selectedPlaylist) {
             // Verifica si la playlist seleccionada ya tiene la canción actual
             //Usamos el método some para verificar si alguna de las canciones en la playlist seleccionada 
@@ -135,7 +135,7 @@ export const Nav = () => {
                             <h2>Canciones encontradas:</h2>
                             <ul className="card-nav">
                                 {searchResults.map((song, index) => (
-                                    <SongCard 
+                                    <SongCard
                                         key={index}
                                         url={song.url}
                                         title={song.title}
@@ -159,17 +159,17 @@ export const Nav = () => {
                         <h3>Añadir a Playlist</h3>
                         {/* Dropdown para seleccionar la playlist- el value es la playlist seleccionada 
                             por el usuario (selectedPlaylist), y se actualiza con el método onChange. */}
-                            <select
-                                className="modal-select-playlist"
-                                value={selectedPlaylist}
-                                onChange={(e) => setSelectedPlaylist(e.target.value)}
-                            >
-                                <option value="">Selecciona una playlist</option>
-                                {Object.keys(playlists).map((name, index) => (
-                                    <option key={index} value={name}>{name}</option>
-                                ))}
-                            </select>
-                            {/*Si el usuario intenta añadir una canción sin seleccionar una playlist, aparecerá un mensaje de error.*/}
+                        <select
+                            className="modal-select-playlist"
+                            value={selectedPlaylist}
+                            onChange={(e) => setSelectedPlaylist(e.target.value)}
+                        >
+                            <option value="">Selecciona una playlist</option>
+                            {Object.keys(playlists).map((name, index) => (
+                                <option key={index} value={name}>{name}</option>
+                            ))}
+                        </select>
+                        {/*Si el usuario intenta añadir una canción sin seleccionar una playlist, aparecerá un mensaje de error.*/}
                         {errorMessage && <p className="error-message">{errorMessage}</p>}
                         <button onClick={handleAddToPlaylist}>Añadir</button>
                         <button onClick={() => setPlaylistModalOpen(false)}>Cancelar</button>

@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 
-export function PagRegistro() {
+export default function PagRegistro() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -109,13 +109,13 @@ export function PagRegistro() {
     };
 
     return (
-        <div>
-            <div className="container-logo">
-                <img src={logo} alt="Logo" className="Logo" />
+        <div className="h-full">
+            <div className="flex flex-col pt-5">
+                <img src={logo} alt="Logo" className="w-2/5 sm:w-1 md:w-1/5 self-center" />
             </div>
-            <form className="form" onSubmit={handleFormSubmit}>
-                <input type="text" name="nombre" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
-                <input type="text" name="userName" placeholder="UserName" value={userName} onChange={handleUserNameChange} required />
+            <form className="flex flex-col w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/3 mx-auto p-5" onSubmit={handleFormSubmit}>
+                <input className="self-center w-full sm:w-11/12 mb-4 p-2 border border-gray-300 rounded" type="text" name="nombre" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+                <input className="self-center w-full sm:w-11/12 mb-4 p-2 border border-gray-300 rounded" type="text" name="userName" placeholder="UserName" value={userName} onChange={handleUserNameChange} required />
 
                 <DatePicker
                     selected={fechaNacimiento}
@@ -134,14 +134,14 @@ export function PagRegistro() {
                         }
                     }}
                 />
-                <input type="text" name="email" placeholder="Email" value={email} onChange={handleEmailChange} required />
-                <input type="password" name="password" placeholder="Contraseña" value={password} onChange={handlePasswordChange} required />
+                <input className="self-center w-full sm:w-11/12 mb-4 p-2 border border-gray-300 rounded" type="text" name="email" placeholder="Email" value={email} onChange={handleEmailChange} required />
+                <input className="self-center w-full sm:w-11/12 mb-4 p-2 border border-gray-300 rounded" type="password" name="password" placeholder="Contraseña" value={password} onChange={handlePasswordChange} required />
 
-                <div className="parrafos">
+                <div className="ml-3 text-left text-white mb-5 p-2 w-11/12 box-border">
                     <p>Términos y Condiciones de SoundGood</p>
                     <p>Al registrarte en SoundGood, aceptas nuestros términos y condiciones. Por favor, asegúrate de revisarlos periódicamente, ya que pueden cambiar. Gracias por unirte a nuestra comunidad musical.</p>
                 </div>
-                <button type="submit">Aceptar y registrarse</button>
+                <button className="self-center w-full sm:w-11/12 py-2 bg-green-600 text-white rounded" type="submit">Aceptar y registrarse</button>
 
                 <div className="error-message">
                     {errorMessage ? errorMessage : ""}

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import './card.css';
 
-export function SongCard({ url, title, tags= [], onClick, image, artist, onFavorite, onAddToPlaylist }) {
+export function SongCard({ url, title, tags, onClick, image, artist, onFavorite, onAddToPlaylist }) {
     const [isFavorite, setIsFavorite] = useState(false);  // Estado para controlar si la canción es favorita
 
     const handleFavoriteClick = (e) => {
@@ -19,7 +19,11 @@ export function SongCard({ url, title, tags= [], onClick, image, artist, onFavor
                 <img src={image} alt={artist} className="artist-image" />
             </div>
             <h3 className="song-title">{title}</h3>
-            <p className="song-tags">{Array.isArray(tags) ? tags.join(', ') : ''}</p>
+            <p className="song-tags">
+                {tags.map((tag, index) => (
+                    <span key={index}>{tag}</span>
+                ))}
+            </p>
             <div className="button-container">
                 <button
                     className="favorite-button"
@@ -36,7 +40,7 @@ export function SongCard({ url, title, tags= [], onClick, image, artist, onFavor
                 >
                     <FontAwesomeIcon icon={faPlus} />
                 </button>
-                
+
 
             </div>
         </div>

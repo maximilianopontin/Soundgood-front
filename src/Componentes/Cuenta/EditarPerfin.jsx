@@ -16,7 +16,7 @@ function EditaPerfil() {
   const [mensajeGuardado, setMensajeGuardado] = useState(false);
 
   const token = localStorage.getItem('access_token');
-  
+
   // Verifica si hay token antes de hacer la solicitud
   if (!token) {
     // Redirige o muestra un mensaje si no hay token
@@ -33,14 +33,14 @@ function EditaPerfil() {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-             'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
           }
         });
 
         if (!response.ok) throw new Error('Error al obtener los datos del perfil');
-        
+
         const data = await response.json();
-        
+
         setUsuario(data); // Establece los datos del usuario en el estado
 
       } catch (error) {
@@ -65,19 +65,19 @@ function EditaPerfil() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try { 
+    try {
       const response = await fetch('http://localhost:8080/usuarios/perfil', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-           'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(usuario)
       });
 
       const data = await response.json(); // Obtener respuesta de la API
       console.log(data);
-      
+
       if (!response.ok) {
         setMensajeGuardado(false);
         throw new Error(data.message || 'No se pudo actualizar el perfil');
@@ -92,76 +92,68 @@ function EditaPerfil() {
   };
 
   return (
-    <>
-      <div>
-        <Nav />
-      </div>
-      <div className="container-editar-perfil">
-        <h1>Editar perfil</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Nombre:</label>
-            <input
-              className="input-editar-Perfil"
-              type="text"
-              name="nombre"
-              value={usuario.nombre}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Nombre usuario:</label>
-            <input
-              className="input-editar-Perfil"
-              type="text"
-              name="userName"
-              value={usuario.userName}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Email:</label>
-            <input
-              className="input-editar-Perfil"
-              type="email"
-              name="email"
-              value={usuario.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Contraseña:</label>
-            <input
-              className="input-editar-Perfil"
-              type="password"
-              name="contraseña"
-              value={usuario.contraseña}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Fecha de Nacimiento:</label>
-            <input
-              className="input-editar-Perfil"
-              type="date"
-              name="fechaDeNacimiento"
-              value={usuario.fechaDeNacimiento}
-              onChange={handleChange}
-            />
-          </div>
-          <button className="btn-guardar" type="submit">Guardar Cambios</button>
-          <div className="error-message">
-            {mensajeGuardado && <p className="mensaje-guardado">Sus cambios han sido guardados</p>}
-          </div>
-          <Link to="/cuenta">
-            <button className="btn-regresar">Regresar a cuenta</button>
-          </Link>
-        </form>
-      </div>
-      <div>
-        <Footer />
-      </div>
-    </>
+    <div className="container-editar-perfil">
+      <h1>Editar perfil</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Nombre:</label>
+          <input
+            className="input-editar-Perfil"
+            type="text"
+            name="nombre"
+            value={usuario.nombre}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Nombre usuario:</label>
+          <input
+            className="input-editar-Perfil"
+            type="text"
+            name="userName"
+            value={usuario.userName}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            className="input-editar-Perfil"
+            type="email"
+            name="email"
+            value={usuario.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Contraseña:</label>
+          <input
+            className="input-editar-Perfil"
+            type="password"
+            name="contraseña"
+            value={usuario.contraseña}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Fecha de Nacimiento:</label>
+          <input
+            className="input-editar-Perfil"
+            type="date"
+            name="fechaDeNacimiento"
+            value={usuario.fechaDeNacimiento}
+            onChange={handleChange}
+          />
+        </div>
+        <button className="btn-guardar" type="submit">Guardar Cambios</button>
+        <div className="error-message">
+          {mensajeGuardado && <p className="mensaje-guardado">Sus cambios han sido guardados</p>}
+        </div>
+        <Link to="/cuenta">
+          <button className="btn-regresar">Regresar a cuenta</button>
+        </Link>
+      </form>
+    </div>
   );
 
 }

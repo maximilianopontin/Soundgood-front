@@ -10,9 +10,10 @@ import ReproductorBuscador from '../Reproductor musica/ReproductorBuscador';
 import Footer from "../Footer/Footer";
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import Modal from 'react-modal';
-Modal.setAppElement('#root'); // Establece el elemento raíz para accesibilidad
 import { usePlayer } from '../Reproductor musica/PlayerContext';
 import Swal from "sweetalert2";
+
+Modal.setAppElement('#root'); // Establece el elemento raíz para accesibilidad
 
 const Song = {
     url: '',
@@ -20,7 +21,7 @@ const Song = {
     tags: []
 };
 
-export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVersionGratuita, redirectToAyudas }) {
+export default function Inicio() {
     const [songsTop10, setSongsTop10] = useState([]);
     const [songsTendencias, setSongsTendencias] = useState([]);
     const [selectedSongUrl, setSelectedSongUrl] = useState(Song);
@@ -32,7 +33,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
     const { currentSong, setCurrentSong } = usePlayer();
 
     useEffect(() => {
-        fetch('http://localhost:8080/top10')
+        fetch('http://localhost:8080/canciones/top10')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('La respuesta de la red no fue exitosa');
@@ -40,9 +41,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                 return response.json();
             })
             .then(data => {
-                setSongsTop10(data[0].cancionId);
-                console.log(data[0].cancionId);
-                
+                setSongsTop10(data);
             })
             .catch(error => {
                 console.error('Error cargando las canciones:', error);
@@ -50,7 +49,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:8080/tendencias')
+        fetch('http://localhost:8080/canciones/tendencias')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('La respuesta de la red no fue exitosa');
@@ -58,7 +57,7 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                 return response.json();
             })
             .then(data => {
-                setSongsTendencias(data[0].cancionId);
+                setSongsTendencias(data);
             })
             .catch(error => {
                 console.error('Error cargando las canciones:', error);
@@ -70,18 +69,12 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
         const token = localStorage.getItem('access_token');
 
         try {
-           const response = await fetch('http://localhost:8080/favoritos/agregar', {
+            const response = await fetch(`http://localhost:8080/favoritos/${song.cancionId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    "usuarioId": 1,
-                    "cancionId": [
-                        song.cancionId
-                    ]
-                }),
             });
             if (response.ok) {
                 Swal.fire({
@@ -90,20 +83,13 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
                     title: "Tu canción se agrego correctamente",
                     showConfirmButton: false,
                     timer: 2500
-                  });
+                });
                 console.log('todo anda bien por aca ');
-             
-
             }
-           console.log(song.cancionId);
-           
-
         } catch (error) {
             console.error('Error en la solicitud de agregar favoritos', error);
             setErrorMessage('Error al intentar agregra a favoritos. Inténtalo nuevamente.')
-
         }
-
     }
 
 
@@ -169,82 +155,74 @@ export function Inicio({ redirectToAcercaDe, redirectToPlanPremium, redirectToVe
     };
 
     return (
-        <>
-            <Nav />
-            <div className="home">
-                <p className="section-title">Top 10</p>
-                <Slider {...settings}>
-                    {songsTop10.map((song, index) => (
-                        <SongCard
-                            key={index}
-                            image={'http://localhost:8080/files/image/' + song.imageFilename}
-                            title={song.titulo}
-                            tags={[song.genero]}
-                            url={'http://localhost:8080/files/song/' + song.songFilename}
-                            onClick={() => {
-                                setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero] });
-                                setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
-                            }}
-                            onFavorite={() => addFavorites(song)}
-                            onAddToPlaylist={() => openModal(song)}
-                        />
-                    ))}
-                </Slider>
-                <p className="section-title">Tendencias</p>
-                <Slider {...settings}>
-                    {songsTendencias.map((song, index) => (
-                        <SongCard
-                            key={index}
-                            image={'http://localhost:8080/files/image/' + song.imageFilename}
-                            title={song.titulo}
-                            tags={[song.genero]}
-                            url={'http://localhost:8080/files/song/' + song.songFilename}
-                            artist={[song.artistas.nombre]}
-                            onClick={() => {
-                                setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero], artist: [song.artistas] });
+        <div className="home">
+            <p className="section-title">Top 10</p>
+            <Slider {...settings}>
+                {songsTop10.map((song, index) => (
+                    <SongCard
+                        key={index}
+                        title={song.titulo}
+                        tags={[song.genero?.genero]}
+                        artist={[song.artistas.map((artista) => artista.nombre)]}
+                        image={'http://localhost:8080/files/image/' + song.imageFilename}
+                        url={'http://localhost:8080/files/song/' + song.songFilename}
+                        onClick={() => {
+                            setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: song.genero }).genero;
+                            setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
+                        }}
+                        onFavorite={() => addFavorites(song)}
+                        onAddToPlaylist={() => openModal(song)}
+                    />
+                ))}
+            </Slider>
+            <p className="section-title">Tendencias</p>
+            <Slider {...settings}>
+                {songsTendencias.map((song, index) => (
+                    <SongCard
+                        key={index}
+                        title={song.titulo}
+                        tags={[song.genero?.genero]}
+                        artist={[song.artistas.map((artista) => artista.nombre)]}
+                        image={'http://localhost:8080/files/image/' + song.imageFilename}
+                        url={'http://localhost:8080/files/song/' + song.songFilename}
+                        onClick={() => {
+                            setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero], artist: [song.artistas] });
 
-                                setCurrentSong(song.url);
-                            }}
-                            onFavorite={() => addFavorites(song)}
-                            onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
-                        />
+                            setCurrentSong(song.url);
+                        }}
+                        onFavorite={() => addFavorites(song)}
+                        onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
+                    />
 
-                    ))}
-                </Slider>
-                {selectedSongUrl.url && <ReproductorBuscador songUrl={selectedSongUrl.url} title={selectedSongUrl.title} tags={selectedSongUrl.tags} />}
-                <Footer
-                    redirectToAcercaDe={redirectToAcercaDe}
-                    redirectToPlanPremium={redirectToPlanPremium}
-                    redirectToVersionGratuita={redirectToVersionGratuita}
-                    redirectToAyudas={redirectToAyudas}
-                />
+                ))}
+            </Slider>
+            {selectedSongUrl.url && <ReproductorBuscador songUrl={selectedSongUrl.url} title={selectedSongUrl.title} tags={selectedSongUrl.tags} />}
 
-                {/* Modal para agregar a playlist */}
-                <Modal
-                    isOpen={isModalOpen}
-                    onRequestClose={closeModal}
-                    className="modal-overlay"
-                >
-                    <div className="Modal-playlist">
-                        <h2>Añadir a Playlist</h2>
-                        <select
-                            className="modal-select-playlist"
-                            value={selectedPlaylist}
-                            onChange={(e) => setSelectedPlaylist(e.target.value)}
-                        >
-                            <option value="">Selecciona una playlist</option>
-                            {Object.keys(playlists).map((name, index) => (
-                                <option key={index} value={name}>{name}</option>
-                            ))}
-                        </select>
-                        {errorMessage && <p className="error-message">{errorMessage}</p>}
-                        <div className="modal-buttons">
-                            <button onClick={handleAddToPlaylist}>Añadir</button>
-                            <button onClick={closeModal}>Cancelar</button>
-                        </div>
+            {/* Modal para agregar a playlist */}
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                className="modal-overlay"
+            >
+                <div className="Modal-playlist">
+                    <h2>Añadir a Playlist</h2>
+                    <select
+                        className="modal-select-playlist"
+                        value={selectedPlaylist}
+                        onChange={(e) => setSelectedPlaylist(e.target.value)}
+                    >
+                        <option value="">Selecciona una playlist</option>
+                        {Object.keys(playlists).map((name, index) => (
+                            <option key={index} value={name}>{name}</option>
+                        ))}
+                    </select>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    <div className="modal-buttons">
+                        <button onClick={handleAddToPlaylist}>Añadir</button>
+                        <button onClick={closeModal}>Cancelar</button>
                     </div>
-                </Modal>
-            </div>
-        </>
+                </div>
+            </Modal>
+        </div>
     );
 }

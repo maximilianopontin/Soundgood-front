@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import logo from '../../logo/logo.png';
-import "./InicioSesion.css";
 import { useNavigate } from "react-router-dom";
 
-export function PagInicioSesion() {
+export default function PagInicioSesion() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -72,12 +71,12 @@ export function PagInicioSesion() {
     };
 
     return (
-        <div >
-            <div className="container-logo">
-            <img src={logo} alt="Logo" className="Logo" />
+        <div className="h-full w-full flex flex-col justify-center">
+            <div className="flex flex-col pt-5">
+            <img src={logo} alt="Logo" className="w-2/5 sm:w-1 md:w-1/5 self-center" />
             </div>
-            <form className="form" onSubmit={handleFormSubmit}>
-                <input 
+            <form className="flex flex-col w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/3 mx-auto p-5" onSubmit={handleFormSubmit}>
+                <input className="self-center w-full sm:w-11/12 mb-4 p-2 border border-gray-300 rounded"
                     type="text" 
                     name="email" 
                     placeholder="Email" 
@@ -85,7 +84,7 @@ export function PagInicioSesion() {
                     onChange={(e) => setEmail(e.target.value)} 
                     required 
                 />
-                <input 
+                <input className="self-center w-full sm:w-11/12 mb-4 p-2 border border-gray-300 rounded"
                     type="password" 
                     name="password" 
                     placeholder="Contraseña" 
@@ -93,7 +92,7 @@ export function PagInicioSesion() {
                     onChange={(e) => setPassword(e.target.value)} 
                     required 
                 />
-                <button type="submit">Iniciar sesión</button>
+                <button className="self-center w-full sm:w-11/12 py-2 bg-green-600 text-white rounded" type="submit">Iniciar sesión</button>
                 <div className="error-message">
                     {errorMessage ? errorMessage : ""}
                 </div>

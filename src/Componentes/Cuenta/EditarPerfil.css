@@ -1,22 +1,10 @@
 /* Archivo CSS usando @apply en Tailwind con clases responsivas */
 
 .container-editar-perfil {
-  @apply w-11/12 max-w-3xl mx-auto p-12 rounded-lg h-auto mt-12 text-left bg-black;
+  @apply w-11/12 max-w-3xl mx-auto p-12 rounded-lg h-auto mt-12 text-left bg-black md:w-3/5 lg:w-2/5;
 }
 .editar-perfil{
   @apply text-white ;
-}
-
-@screen md {
-  .container-editar-perfil {
-      @apply w-3/5; /* Más estrecho en pantallas medianas y grandes */
-  }
-}
-
-@screen lg {
-  .container-editar-perfil {
-      @apply w-2/5; /* Aún más estrecho en pantallas grandes */
-  }
 }
 
 label {

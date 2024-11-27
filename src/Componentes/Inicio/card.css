@@ -7,20 +7,8 @@
 
 /* Estilos para la tarjeta de canción */
 .song-card {
-    @apply border border-gray-300 rounded-lg p-3 m-2 text-center bg-gray-50 transition-transform duration-200 hover:scale-105 hover:shadow-lg flex flex-col justify-center box-border font-sans;
-    @apply min-w-[100px] w-[160px] h-[220px]; /* Tamaño aún más pequeño en pantallas pequeñas */
-}
-
-@media (min-width: 640px) { /* Tamaño para pantallas medianas */
-    .song-card {
-        @apply min-w-[200px] w-[220px] h-[270px];
-    }
-}
-
-@media (min-width: 768px) { /* Tamaño para pantallas grandes */
-    .song-card {
-        @apply min-w-[250px] w-[270px] h-[350px];
-    }
+    @apply m-4 border border-gray-300 rounded-lg p-3 text-center bg-gray-50 transition-transform duration-200 hover:scale-105 hover:shadow-lg flex flex-col justify-center box-border font-sans;
+    @apply min-w-[100px] w-[160px] h-[220px]  md:min-w-[250px] md:w-[270px] md:h-[350px]; /* Tamaño aún más pequeño en pantallas pequeñas */
 }
 
 /* Contenedor de la imagen */
@@ -30,43 +18,18 @@
 
 /* Imagen del artista */
 .artist-image {
-    @apply max-w-full max-h-[80px] w-[100px] h-[80px] object-cover rounded-md; /* Tamaño muy pequeño en pantallas pequeñas */
-}
-
-@media (min-width: 640px) { /* Ajuste de imagen en pantallas medianas */
-    .artist-image {
-        @apply max-h-[120px] w-[140px] h-[120px];
-    }
-}
-
-@media (min-width: 768px) { /* Ajuste de imagen en pantallas grandes */
-    .artist-image {
-        @apply max-h-[150px] w-[180px] h-[150px];
-    }
+    @apply max-w-full max-h-[80px] w-[100px] h-[80px] object-cover rounded-md md:max-h-[150px] md:w-[180px] md:h-[150px]; /* Tamaño muy pequeño en pantallas pequeñas */
 }
 
 /* Título */
 .song-title {
-    @apply text-sm font-semibold text-gray-800; /* Tamaño de texto más pequeño en pantallas pequeñas */
-}
-
-@media (min-width: 640px) { /* Ajuste del título en pantallas medianas */
-    .song-title {
-        @apply text-base font-medium;
-    }
+    @apply text-sm font-semibold text-gray-800 md:text-base md:font-medium; /* Tamaño de texto más pequeño en pantallas pequeñas */
 }
 
 /* Texto de tags */
 .song-tags {
-    @apply mt-1 text-gray-600 text-xs; /* Tamaño de texto aún más pequeño en pantallas pequeñas */
+    @apply mt-1 text-gray-600 text-xs md:text-sm; /* Tamaño de texto aún más pequeño en pantallas pequeñas */
 }
-
-@media (min-width: 640px) { /* Ajuste de tags en pantallas medianas */
-    .song-tags {
-        @apply text-sm;
-    }
-}
-
 /* Contenedor de botones */
 .button-container {
     @apply flex justify-center gap-6 mt-2;
@@ -74,22 +37,10 @@
 
 /* Botón de favorito */
 .favorite-button {
-    @apply bg-green-500 text-white rounded-lg py-1 px-1 text-xs hover:bg-green-700 transition-colors focus:outline-none; /* Tamaño de botón reducido */
-}
-
-@media (min-width: 640px) { /* Ajuste de botón en pantallas medianas */
-    .favorite-button {
-        @apply py-2 px-2 text-sm;
-    }
+    @apply bg-green-500 text-white rounded-lg py-1 px-1 text-xs hover:bg-green-700 transition-colors focus:outline-none md:py-2 md:px-2 md:text-sm; /* Tamaño de botón reducido */
 }
 
 /* Botón de agregar */
 .add-button {
-    @apply bg-green-500 text-white rounded-lg py-1 px-1 text-xs hover:bg-green-700 transition-colors focus:outline-none; /* Tamaño de botón reducido */
-}
-
-@media (min-width: 640px) { /* Ajuste de botón en pantallas medianas */
-    .add-button {
-        @apply py-2 px-2 text-sm;
-    }
+    @apply bg-green-500 text-white rounded-lg py-1 px-1 text-xs hover:bg-green-700 transition-colors focus:outline-none md:py-2 md:px-2 md:text-sm; /* Tamaño de botón reducido */
 }

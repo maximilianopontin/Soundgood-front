@@ -42,20 +42,16 @@ function Premium() {
         }
     };
     return (
-        <>
-            <Nav className="nav-fixed" />
-            <main className="premium-main">
-                <h2 className="premium-title">Sound Good Premium</h2>
-                <button className="premium-button" onClick={handleBuyingProcess}>Pagar con Mercado Pago</button>
-                {preferenceId && (
-                    <Wallet
-                        initialization={{ preferenceId }}
-                        customization={{ texts: { valueProp: 'smart_option' } }}
-                    />
-                )}
-            </main>
-            <Footer className="footer-fixed" />
-        </>
+        <main className="premium-main">
+            <h2 className="premium-title">Sound Good Premium</h2>
+            <button className="premium-button" onClick={handleBuyingProcess}>Pagar con Mercado Pago</button>
+            {preferenceId && (
+                <Wallet
+                    initialization={{ preferenceId }}
+                    customization={{ texts: { valueProp: 'smart_option' } }}
+                />
+            )}
+        </main>
     );
 }
 export default Premium;
