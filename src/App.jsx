@@ -28,15 +28,21 @@ const Layout = ({ children }) => (
     </div>
 );
 
+const LayoutIncio = ({ children }) => (
+    <div className="flex flex-col justify-between h-[100vh] bg-black">
+        {children}
+    </div>
+);
+
 export default function App() {
     return (
         <PlayerProvider>
             <Router>
                 <Routes>
                     {/* Rutas sin Navbar y Footer */}
-                    <Route path="/" element={<PagInicio />} />
-                    <Route path="/inicio-sesion" element={<PagInicioSesion />} />
-                    <Route path="/registro" element={<PagRegistro />} />
+                    <Route path="/" element={<LayoutIncio><PagInicio /></LayoutIncio>} />
+                    <Route path="/inicio-sesion" element={<LayoutIncio><PagInicioSesion /></LayoutIncio>} />
+                    <Route path="/registro" element={<LayoutIncio><PagRegistro /></LayoutIncio>} />
 
                     {/* Rutas con Layout (Navbar y Footer) */}
                     <Route path="/home" element={<Layout><Inicio /></Layout>} />
