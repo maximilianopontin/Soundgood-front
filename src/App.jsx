@@ -4,7 +4,7 @@ import './App.css'
 
 // Componentes
 import PagInicio from './Componentes/Pagina de Inicio/PagInicio';
-import PagRegistro  from './Componentes/Registro/Registro';
+import PagRegistro from './Componentes/Registro/Registro';
 import AcercaDe from './Componentes/Footer/AcercaDe';
 import PlanPremium from './Componentes/Footer/PlanPremium';
 import VersionGratuita from './Componentes/Footer/VersionGratuita';
@@ -21,11 +21,11 @@ import Nav from './Componentes/Nav/Nav';
 
 // Layout principal que incluye Navbar y Footer
 const Layout = ({ children }) => (
-    <>
+    <div className="flex flex-col justify-between h-[100vh] bg-black">
         <Nav />
-        <div className="bg-black h-full">{children}</div>
+        {children}
         <Footer />
-    </>
+    </div>
 );
 
 export default function App() {

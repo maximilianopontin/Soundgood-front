@@ -12,13 +12,17 @@ export function SongCard({ url, title, tags, onClick, image, artist, onFavorite,
         onFavorite();
     };
 
-
     return (
         <div className="song-card" onClick={onClick}>
             <div className="image-container">
                 <img src={image} alt={artist} className="artist-image" />
             </div>
             <h3 className="song-title">{title}</h3>
+            <p className="flex flex-col">
+                {artist.map((tag, index) => (
+                    <span key={index}>{tag.nombre}</span>
+                ))}
+            </p>
             <p className="song-tags">
                 {tags.map((tag, index) => (
                     <span key={index}>{tag}</span>
@@ -26,13 +30,13 @@ export function SongCard({ url, title, tags, onClick, image, artist, onFavorite,
             </p>
             <div className="button-container">
                 <button
-                    className="favorite-button"
+                    className="button-accion"
                     onClick={handleFavoriteClick}
                 >
                     <FontAwesomeIcon icon={faHeart} className={isFavorite ? 'text-red-500' : 'text-white'} />
                 </button>
                 <button
-                    className="add-button"
+                    className="button-accion"
                     onClick={(e) => {
                         e.stopPropagation();
                         onAddToPlaylist();
@@ -40,8 +44,6 @@ export function SongCard({ url, title, tags, onClick, image, artist, onFavorite,
                 >
                     <FontAwesomeIcon icon={faPlus} />
                 </button>
-
-
             </div>
         </div>
     );

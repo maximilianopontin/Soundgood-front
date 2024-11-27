@@ -1,23 +1,7 @@
 /* Archivo CSS usando @apply en Tailwind con clases responsivas */
 
-.cuenta {
-    @apply mt-24 ;
-}
-
 .cuenta-btn {
-    @apply flex flex-col w-4/5 mx-auto p-2.5 rounded mb-48 mt-24; /* Estilo base para móviles */
-}
-
-@screen md {
-    .cuenta-btn {
-        @apply w-2/5; /* Ancho medio en pantallas medianas */
-    }
-}
-
-@screen lg {
-    .cuenta-btn {
-        @apply w-1/5; /* Ancho más estrecho en pantallas grandes */
-    }
+    @apply flex flex-col justify-center items-center w-4/5 mx-auto p-2.5 rounded md:w-2/5 lg:w-1/5; /* Estilo base para móviles */
 }
 
 .btn {

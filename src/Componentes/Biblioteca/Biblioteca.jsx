@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import "./Biblioteca.css";
-import { Nav } from '../Nav/Nav';
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import '../Inicio/card.css';
 import ReproductorBuscador from '../Reproductor musica/ReproductorBuscador';
-import Footer from '../Footer/Footer';
 import { SongCard } from '../Inicio/Card';
 import { usePlayer } from '../Reproductor musica/PlayerContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

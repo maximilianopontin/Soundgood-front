@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './EditarPerfil.css';
 import './cuenta.css';
 import { Link } from 'react-router-dom';
-import { Nav } from '../Nav/Nav';
-import Footer from '../Footer/Footer';
 
 function EditaPerfil() {
   const [usuario, setUsuario] = useState({
@@ -29,7 +27,7 @@ function EditaPerfil() {
   useEffect(() => {
     const obtenerDatosCliente = async () => {
       try {
-        const response = await fetch('http://localhost:8080/usuarios/perfil', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/usuarios/perfil`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -66,7 +64,7 @@ function EditaPerfil() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/usuarios/perfil', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/usuarios/perfil`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

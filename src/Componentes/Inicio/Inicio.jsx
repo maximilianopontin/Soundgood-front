@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { SongCard } from "./Card";
-import './card.css';
-import './Inicio.css';
+// import './Inicio.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Nav } from "../Nav/Nav";
 import ReproductorBuscador from '../Reproductor musica/ReproductorBuscador';
-import Footer from "../Footer/Footer";
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import Modal from 'react-modal';
 import { usePlayer } from '../Reproductor musica/PlayerContext';
@@ -33,7 +30,7 @@ export default function Inicio() {
     const { currentSong, setCurrentSong } = usePlayer();
 
     useEffect(() => {
-        fetch('http://localhost:8080/canciones/top10')
+        fetch(`${import.meta.env.VITE_API_URL}/canciones/top10`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('La respuesta de la red no fue exitosa');
@@ -49,7 +46,7 @@ export default function Inicio() {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:8080/canciones/tendencias')
+        fetch(`${import.meta.env.VITE_API_URL}/canciones/tendencias`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('La respuesta de la red no fue exitosa');
@@ -69,7 +66,7 @@ export default function Inicio() {
         const token = localStorage.getItem('access_token');
 
         try {
-            const response = await fetch(`http://localhost:8080/favoritos/${song.cancionId}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/favoritos/${song.cancionId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,9 +88,6 @@ export default function Inicio() {
             setErrorMessage('Error al intentar agregra a favoritos. Inténtalo nuevamente.')
         }
     }
-
-
-
 
     const openModal = (song) => {
         setCurrentSong(song.url); // Establece la canción en el contexto
@@ -130,10 +124,10 @@ export default function Inicio() {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 4, // Muestra 4 tarjetas
+        slidesToShow: 5, // Muestra 4 tarjetas
         slidesToScroll: 1, // Cambia de una tarjeta a la vez
         centerMode: true, // Activa el modo de centrado
-        centerPadding: '110px', // Espacio adicional a los lados
+        centerPadding: '5em', // Espacio adicional a los lados
         responsive: [
             {
                 breakpoint: 1024,
@@ -155,47 +149,49 @@ export default function Inicio() {
     };
 
     return (
-        <div className="home">
+        <div className="bg-black pb-8">
             <p className="section-title">Top 10</p>
-            <Slider {...settings}>
-                {songsTop10.map((song, index) => (
-                    <SongCard
-                        key={index}
-                        title={song.titulo}
-                        tags={[song.genero?.genero]}
-                        artist={[song.artistas.map((artista) => artista.nombre)]}
-                        image={'http://localhost:8080/files/image/' + song.imageFilename}
-                        url={'http://localhost:8080/files/song/' + song.songFilename}
-                        onClick={() => {
-                            setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: song.genero }).genero;
-                            setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
-                        }}
-                        onFavorite={() => addFavorites(song)}
-                        onAddToPlaylist={() => openModal(song)}
-                    />
-                ))}
-            </Slider>
+            <div className="my-4">
+                <Slider {...settings}>
+                    {songsTop10.map((song, index) => (
+                        <SongCard
+                            key={index}
+                            title={song.titulo}
+                            tags={[song.genero?.genero]}
+                            artist={song.artistas}
+                            image={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`}
+                            url={`${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`}
+                            onClick={() => {
+                                setSelectedSongUrl({ url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilenames}`, title: song.titulo, tags: song.genero?.generos }).genero;
+                                setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
+                            }}
+                            onFavorite={() => addFavorites(song)}
+                            onAddToPlaylist={() => openModal(song)}
+                        />
+                    ))}
+                </Slider>
+            </div>
             <p className="section-title">Tendencias</p>
-            <Slider {...settings}>
-                {songsTendencias.map((song, index) => (
-                    <SongCard
-                        key={index}
-                        title={song.titulo}
-                        tags={[song.genero?.genero]}
-                        artist={[song.artistas.map((artista) => artista.nombre)]}
-                        image={'http://localhost:8080/files/image/' + song.imageFilename}
-                        url={'http://localhost:8080/files/song/' + song.songFilename}
-                        onClick={() => {
-                            setSelectedSongUrl({ url: 'http://localhost:8080/files/song/' + song.songFilename, title: song.titulo, tags: [song.genero], artist: [song.artistas] });
-
-                            setCurrentSong(song.url);
-                        }}
-                        onFavorite={() => addFavorites(song)}
-                        onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
-                    />
-
-                ))}
-            </Slider>
+            <div className="my-4">
+                <Slider {...settings}>
+                    {songsTendencias.map((song, index) => (
+                        <SongCard
+                            key={index}
+                            title={song.titulo}
+                            tags={[song.genero?.genero]}
+                            artist={song.artistas}
+                            image={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`}
+                            url={`${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`}
+                            onClick={() => {
+                                setSelectedSongUrl({ url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilenames}`, title: song.titulo, tags: [song.genero?.genero], artist: [song.artistas] });
+                                setCurrentSong(song.url);
+                            }}
+                            onFavorite={() => addFavorites(song)}
+                            onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
+                        />
+                    ))}
+                </Slider>
+            </div>
             {selectedSongUrl.url && <ReproductorBuscador songUrl={selectedSongUrl.url} title={selectedSongUrl.title} tags={selectedSongUrl.tags} />}
 
             {/* Modal para agregar a playlist */}

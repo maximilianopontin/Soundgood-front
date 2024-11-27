@@ -24,7 +24,7 @@ export default function PagInicioSesion() {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/autenticacion/login', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/autenticacion/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

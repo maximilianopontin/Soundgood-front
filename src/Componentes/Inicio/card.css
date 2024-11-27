@@ -7,13 +7,13 @@
 
 /* Estilos para la tarjeta de canción */
 .song-card {
-    @apply m-4 border border-gray-300 rounded-lg p-3 text-center bg-gray-50 transition-transform duration-200 hover:scale-105 hover:shadow-lg flex flex-col justify-center box-border font-sans;
-    @apply min-w-[100px] w-[160px] h-[220px]  md:min-w-[250px] md:w-[270px] md:h-[350px]; /* Tamaño aún más pequeño en pantallas pequeñas */
+    @apply border border-gray-300 rounded-lg p-3 text-center bg-gray-50 transition-transform duration-200 hover:scale-100 hover:shadow-lg flex flex-col justify-between box-border font-sans;
+    @apply min-w-[180px] w-[140px] min-h-[370px] h-[330px] md:min-w-[290px] md:w-[250px] md:min-h-[470px] md:h-[430px]; /* Tamaño aún más pequeño en pantallas pequeñas */
 }
 
 /* Contenedor de la imagen */
 .image-container {
-    @apply flex justify-center items-center mb-2;
+    @apply flex justify-center items-center mt-6;
 }
 
 /* Imagen del artista */
@@ -32,15 +32,10 @@
 }
 /* Contenedor de botones */
 .button-container {
-    @apply flex justify-center gap-6 mt-2;
+    @apply flex justify-center gap-6 mt-2 mb-6;
 }
 
 /* Botón de favorito */
-.favorite-button {
-    @apply bg-green-500 text-white rounded-lg py-1 px-1 text-xs hover:bg-green-700 transition-colors focus:outline-none md:py-2 md:px-2 md:text-sm; /* Tamaño de botón reducido */
-}
-
-/* Botón de agregar */
-.add-button {
-    @apply bg-green-500 text-white rounded-lg py-1 px-1 text-xs hover:bg-green-700 transition-colors focus:outline-none md:py-2 md:px-2 md:text-sm; /* Tamaño de botón reducido */
+.button-accion {
+    @apply bg-green-500 text-white rounded-lg py-1 px-1 text-xs hover:bg-green-700 transition-colors focus:outline-none md:py-2 md:px-2 md:text-sm w-[3em]; /* Tamaño de botón reducido */
 }

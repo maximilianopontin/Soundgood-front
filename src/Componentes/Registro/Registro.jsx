@@ -40,7 +40,7 @@ export default function PagRegistro() {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/autenticacion/registro', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/autenticacion/registro`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

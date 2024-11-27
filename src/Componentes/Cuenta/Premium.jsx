@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import Footer from "../Footer/Footer";
-import { Nav } from "../Nav/Nav";
 import './EditarPerfil.css';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import './premium.css';
 function Premium() {
     const [preferenceId, setPreferenceId] = useState(null);
     initMercadoPago('APP_USR-7481233767070694-102420-be7e374961dd92e3cc39446b697d1e19-225509543', { locale: 'es-AR' });
-    //'http://localhost:8080/mercadopago/create-preference'
+    //'import.meta.env.VITE_API_URL/mercadopago/create-preference'
     //https://soundgood-back.onrender.com/mercadopago/create-preference
     const createPreference = async () => {
         try {
-            const res = await fetch('http://localhost:8080/mercadopago/create-preference', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/mercadopago/create-preference`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"

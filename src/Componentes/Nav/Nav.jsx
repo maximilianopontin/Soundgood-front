@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { SongCard } from '../Inicio/Card';
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import { usePlayer } from '../Reproductor musica/PlayerContext';
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 const Song = {
     url: '',
@@ -20,7 +21,6 @@ export default function Nav() {
     const [isSearchModalOpen, setSearchModalOpen] = useState(false);  // Modal de búsqueda
     const [isPlaylistModalOpen, setPlaylistModalOpen] = useState(false); // Modal de agregar a playlist
     const [songUrlReproductor, setSongUrlReproductor] = useState(Song);
-    const [top50Tracks, setTop50Tracks] = useState([]);
     const [cancionesTracks, setCancionesTracks] = useState([]);
     const { addFavorite, addSongToPlaylist, playlists } = useFavorites();
     const [playlistName, setPlaylistName] = useState('');
@@ -31,17 +31,19 @@ export default function Nav() {
         (''); // Playlist seleccionada
 
     useEffect(() => {
-        fetch('/CancionesTop50.json')
-            .then(response => response.json())
-            .then(data => setTop50Tracks(data))
-            .catch(error => console.error('Error al obtener datos:', error));
-    }, []);
-
-    useEffect(() => {
-        fetch('/Canciones.json')
-            .then(response => response.json())
-            .then(data => setCancionesTracks(data))
-            .catch(error => console.error('Error loading the otra lista tracks:', error));
+        fetch(`${import.meta.env.VITE_API_URL}/canciones`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La respuesta de la red no fue exitosa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setCancionesTracks(data);
+            })
+            .catch(error => {
+                console.error('Error cargando las canciones:', error);
+            });
     }, []);
 
     const handleSearch = () => {
@@ -49,11 +51,8 @@ export default function Nav() {
             return;
         }
         const filteredResults = [
-            ...top50Tracks.filter(song =>
-                song.title.toLowerCase().includes(searchTerm.toLowerCase())
-            ),
             ...cancionesTracks.filter(song =>
-                song.title.toLowerCase().includes(searchTerm.toLowerCase())
+                song.titulo.toLowerCase().includes(searchTerm.toLowerCase())
             )
         ];
         setSearchResults(filteredResults);
@@ -126,29 +125,31 @@ export default function Nav() {
                     <Link to="/cuenta">Cuenta</Link>
                 </div>
             </div>
-
             {isSearchModalOpen && (
-                <div className="modal-overlay">
-                    <div className="modalNav">
-                        <div className="modal-content">
-                            <span className="close" onClick={() => setSearchModalOpen(false)}>×</span>
-                            <h2>Canciones encontradas:</h2>
-                            <ul className="card-nav">
-                                {searchResults.map((song, index) => (
-                                    <SongCard
-                                        key={index}
-                                        url={song.url}
-                                        title={song.title}
-                                        image={song.image}
-                                        artist={song.artist}
-                                        tags={song.tags || []}
-                                        onClick={() => handleSongSelec(song)}
-                                        onFavorite={() => handleFavorite(song)}
-                                        onAddToPlaylist={() => openPlaylistModal(song)}  // Abre el modal de playlist
-                                    />
-                                ))}
-                            </ul>
-                        </div>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-70 w-full h-screen">
+                    <div className="relative w-full lg:w-5/6 p-4 bg-white shadow-xl rounded-[25px] max-h-[80vh] overflow-hidden overflow-y-auto">
+                        <span
+                            onClick={() => setSearchModalOpen(false)}
+                            className="absolute top-4 right-4 lg:top-8 lg:right-8 cursor-pointer"
+                        >
+                            <IoCloseCircleOutline className="w-4 h-4 md:w-10 md:h-10 text-red rounded-full" />
+                        </span>
+                        <h2 className=" mt-0 mb-3 text-2xl font-bold text-gray-800 text-center">Canciones encontradas</h2>
+                        <ul className="grid grid-cols-1 md:grid-cols-4 gap-5 content-between">
+                            {searchResults.map((song, index) => (
+                                <SongCard
+                                    key={index}
+                                    title={song.titulo}
+                                    tags={[song.genero?.genero]}
+                                    artist={song.artistas}
+                                    image={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`}
+                                    url={`${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`}
+                                    onClick={() => handleSongSelec(song)}
+                                    onFavorite={() => handleFavorite(song)}
+                                    onAddToPlaylist={() => openPlaylistModal(song)}  // Abre el modal de playlist
+                                />
+                            ))}
+                        </ul>
                     </div>
                 </div>
             )}
