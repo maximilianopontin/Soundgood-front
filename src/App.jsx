@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { PlayerProvider } from './Componentes/Reproductor musica/PlayerContext';
 import './App.css'
 
@@ -18,21 +18,38 @@ import EditaPerfil from './Componentes/Cuenta/EditarPerfin';
 import Footer from './Componentes/Footer/Footer';
 import Nav from './Componentes/Nav/Nav';
 
-
 // Layout principal que incluye Navbar y Footer
-const Layout = ({ children }) => (
-    <div className="flex flex-col justify-between h-[100vh] bg-black">
-        <Nav />
-        {children}
-        <Footer />
-    </div>
-);
+const Layout = ({ children }) => {
+    const token = localStorage.getItem('access_token');
 
-const LayoutIncio = ({ children }) => (
-    <div className="flex flex-col justify-between h-[100vh] bg-black">
-        {children}
-    </div>
-);
+    // Si no hay token, redirige al inicio de sesión
+    if (!token) {
+        return <Navigate to="/inicio-sesion" replace />;
+    }
+
+    return (
+        <div className="flex flex-col justify-between h-[100vh] bg-black">
+            <Nav />
+            {children}
+            <Footer />
+        </div>
+    );
+};
+
+const LayoutIncio = ({ children }) => {
+    const token = localStorage.getItem('access_token');
+
+    // Si hay token, redirige al home
+    if (token) {
+        return <Navigate to="/home" replace />;
+    }
+
+    return (
+        <div className="flex flex-col justify-between h-[100vh] bg-black">
+            {children}
+        </div>
+    );
+};
 
 export default function App() {
     return (

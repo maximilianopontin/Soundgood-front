@@ -162,7 +162,7 @@ export default function Inicio() {
                             image={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`}
                             url={`${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`}
                             onClick={() => {
-                                setSelectedSongUrl({ url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilenames}`, title: song.titulo, tags: song.genero?.generos }).genero;
+                                setSelectedSongUrl({ url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`, title: song.titulo, tags: song.genero?.generos });
                                 setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
                             }}
                             onFavorite={() => addFavorites(song)}
@@ -183,7 +183,7 @@ export default function Inicio() {
                             image={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`}
                             url={`${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`}
                             onClick={() => {
-                                setSelectedSongUrl({ url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilenames}`, title: song.titulo, tags: [song.genero?.genero], artist: [song.artistas] });
+                                setSelectedSongUrl({ url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`, title: song.titulo, tags: [song.genero?.genero], artist: [song.artistas] });
                                 setCurrentSong(song.url);
                             }}
                             onFavorite={() => addFavorites(song)}

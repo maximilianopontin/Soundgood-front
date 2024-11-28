@@ -8,9 +8,11 @@ import { usePlayer } from '../Reproductor musica/PlayerContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 const Song = {
-    url: '',
-    title: '',
-    tags: []
+    titulo:'',
+    tags:[],
+    artist:[],
+    image:'',
+    url:''
 };
 
 export default function Biblioteca() {
@@ -107,11 +109,11 @@ export default function Biblioteca() {
             )}
 
             {/* Ver si hay elementos dentro de la playlist seleccionada */}
-            {selectedSong && (
+            {selectedSong.titulo != '' && (
                 <div className="card-playlist">
                     <SongCard
                         url={selectedSong.url}
-                        title={selectedSong.title}
+                        title={selectedSong.titulo}
                         tags={selectedSong.tags}
                         image={selectedSong.image}
                         artist={selectedSong.artist}
