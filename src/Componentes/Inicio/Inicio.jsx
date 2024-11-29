@@ -125,7 +125,7 @@ export default function Inicio() {
         infinite: true,
         speed: 500,
         slidesToShow: 5, // Muestra 4 tarjetas
-        slidesToScroll: 2, // Cambia de una tarjeta a la vez
+        slidesToScroll: 1, // Cambia de una tarjeta a la vez
         centerMode: true, // Activa el modo de centrado
         centerPadding: '5%', // Espacio adicional a los lados
         responsive: [
@@ -133,7 +133,7 @@ export default function Inicio() {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 1,
+                    slidesToScroll: 2,
                     centerPadding: '20px',
                 }
             },
