@@ -21,6 +21,7 @@ const Song = {
 export default function Inicio() {
     const [songsTop10, setSongsTop10] = useState([]);
     const [songsTendencias, setSongsTendencias] = useState([]);
+    //crear setfavoriteusuario 
     const [selectedSongUrl, setSelectedSongUrl] = useState(Song);
     const { addFavorite, addSongToPlaylist, playlists } = useFavorites();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +29,7 @@ export default function Inicio() {
     const [selectedPlaylist, setSelectedPlaylist] = useState(''); // Playlist seleccionada
     const [errorMessage, setErrorMessage] = useState('');
     const { currentSong, setCurrentSong } = usePlayer();
-
+//traer favoritos del usuario, mediante endpoint  canciones/favoritosbyuser
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/canciones/top10`)
             .then(response => {
@@ -61,31 +62,44 @@ export default function Inicio() {
             });
     }, []);
 
-    const addFavorites = async (song) => {
+    const addFavorites = async (song, metodo) => {
 
-        const token = localStorage.getItem('access_token');
-
-        try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/favoritos/${song.cancionId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
+        try { 
+            const token = localStorage.getItem('access_token');//aca obtenemos el token que contiene el id del usuario
+          // Mostrar la alerta de carga
+          Swal.fire({
+            title: metodo == "POST" ? 'Guardando tu favorito...' : "Eliminando tu favorito",
+            text: 'Por favor espera',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          const res = await fetch(`${import.meta.env.VITE_API_URL}/favoritos/${song.cancionId}`, {
+            method: metodo,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+          if (res.status === 200) {
+            Swal.close();
+      
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops... Error !!!!',
+              // text: `Error ${res.statusText}`,
+              confirmButtonText: 'Aceptar'
             });
-            if (response.ok) {
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Tu canción se agrego correctamente",
-                    showConfirmButton: false,
-                    timer: 2500
-                });
-                console.log('todo anda bien por aca ');
-            }
+          }
         } catch (error) {
-            console.error('Error en la solicitud de agregar favoritos', error);
-            setErrorMessage('Error al intentar agregra a favoritos. Inténtalo nuevamente.')
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops... Error !!!!',
+            text: `Error ${error}`,
+            confirmButtonText: 'Aceptar'
+          });
         }
     }
 
