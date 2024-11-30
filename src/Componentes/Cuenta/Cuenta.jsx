@@ -14,10 +14,10 @@ function Cuenta() {
     return (
         <div className="cuenta-btn">
             <Link to="/editar-perfil">
-                <button className="btn">Editar perfil</button>
+                <button className="btn-perfil">Editar perfil</button>
             </Link>
             <Link to="/premium">
-                <button className="btn">Acceder a Premium</button>
+                <button className="btn-premium">Acceder a Premium</button>
             </Link>
             <button className="btn-salir" onClick={() => handleLogut() }>Salir</button>
         </div>

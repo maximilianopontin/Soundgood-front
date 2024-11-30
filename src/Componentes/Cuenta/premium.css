@@ -1,28 +1,19 @@
-/* Archivo CSS utilizando @apply en Tailwind */
-
 /* Estilos para la sección premium */
 .premium-main {
     @apply flex flex-col items-center justify-center h-1/2 px-5 text-center;
-    /* min-height: calc(100vh - 100px); Ajuste para el nav y el footer */
 }
 
 .premium-title {
-    @apply text-4xl text-white mb-5 no-underline;
+    @apply text-2xl text-white mb-5 sm:text-3xl no-underline;
+
 }
 
 .premium-button {
-    @apply bg-[#5fa25b] text-white border-none py-2 px-5 text-base cursor-pointer rounded transition ease-in-out duration-300;
+    @apply bg-[#5fa25b] text-white border-none mt-3 mb-4 py-2 px-5 text-base cursor-pointer rounded transition ease-in-out duration-300 sm:py-1.5 sm:px-4;;
+
 }
 
 .premium-button:hover {
     @apply bg-[#2b7427]; /* Cambio de color al hacer hover */
 }
 
-/* Estilos para la navegación y footer */
-.nav-fixed {
-    @apply fixed top-0 w-full z-10;
-}
-
-.footer-fixed {
-    @apply fixed bottom-0 w-full z-10;
-}

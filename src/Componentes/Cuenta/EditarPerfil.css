@@ -24,7 +24,7 @@ form {
 }
 
 .btn-guardar {
-  @apply self-center items-center w-full p-2.5 bg-[#5fa25b] text-white border-none rounded;
+  @apply self-center items-center w-full p-2.5 mb-2 bg-[#5fa25b] text-white border-none rounded;
 }
 
 .btn-regresar {
