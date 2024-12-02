@@ -16,7 +16,7 @@ function PagInicio() {
                         <button className="green-button">Iniciar sesión</button>
                     </Link>
                     <Link to="/registro">
-                        <button className="green-button">Registrate</button>
+                        <button className="green-button">Registrarse</button>
                     </Link>
                 </div>
             </div>
