@@ -90,6 +90,7 @@ export default function Inicio() {
     }
 
     const addFavorites = async (song, favoritoExistente) => {
+        //agregar o remover la cancion ue esta en los favoritos del usuarios
     let metodo = favoritoExistente ? "DELETE" : "POST";
         try {
             const token = localStorage.getItem('access_token');//aca obtenemos el token que contiene el id del usuario
@@ -111,6 +112,7 @@ export default function Inicio() {
             });
             console.log (res.status);
             if (res.status === 201 || 200 ) {
+                //si res.status = 200, lo agrego al array, si es 201 lo elimino del array, lo debo buscar por el id 
                 //settimeout
                 Swal.close();
 
