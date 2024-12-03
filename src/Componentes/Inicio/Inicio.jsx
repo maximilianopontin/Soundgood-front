@@ -102,20 +102,22 @@ export default function Inicio() {
                     Swal.showLoading();
                 },
             });
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/favoritos/${song.cancionId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/canciones/favoritos/${song.cancionId}`, {
                 method: metodo,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
             });
-            if (res.status === 200) {
+            console.log (res.status);
+            if (res.status === 201 || 200 ) {
+                //settimeout
                 Swal.close();
 
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops... Error !!!!',
+                    title: 'Oops... Error aca!!!!',
                     // text: `Error ${res.statusText}`,
                     confirmButtonText: 'Aceptar'
                 });
