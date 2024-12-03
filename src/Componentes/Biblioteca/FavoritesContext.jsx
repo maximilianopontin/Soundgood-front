@@ -1,19 +1,82 @@
-import React, { createContext, useState, useContext } from 'react';
-
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import Swal from "sweetalert2";
 // Crear el contexto
 const FavoritesContext = createContext();
 
 // Proveedor del contexto
 export const FavoritesProvider = ({ children }) => {
+
     const [favorites, setFavorites] = useState([]);
     const [playlists, setPlaylists] = useState({});
+    const token = localStorage.getItem('access_token');
+    const [selectedSongUrl, setSelectedSongUrl] = useState({});
 
     // Añade una canción a los favoritos si no está ya en la lista.
-    const addFavorite = (song) => {
-        if (!favorites.some(fav => fav.url === song.url)) {
-            setFavorites([...favorites, song]);
+    const verificarFavorito = (data, cancionId) => {
+        const existe = data.some(objeto => objeto.cancionId === cancionId);
+        return existe;
+    }
+
+    const addFavorites = async (song, favoritoExistente, setFavorites) => {
+
+        //agregar o remover la cancion ue esta en los favoritos del usuarios
+        const metodo = favoritoExistente ? "DELETE" : "POST";
+
+        try {
+            const token = localStorage.getItem('access_token'); //aca obtenemos el token que contiene el id del usuario
+
+            // Mostrar la alerta de carga
+            Swal.fire({
+                title: metodo == "POST" ? 'Guardando tu favorito...' : "Eliminando tu favorito",
+                text: 'Por favor espera',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/canciones/favoritos/${song.cancionId}`, {
+                method: metodo,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+
+            // console.log(res.status);
+            // Validar la respuesta
+            if (res.ok) {
+                if (metodo === "POST") {
+                    setFavorites((prevFavorites) => [...prevFavorites, song]);
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Favorito guardado!',
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                } else {
+                    setFavorites((prevFavorites) => prevFavorites.filter(fav => fav.cancionId !== song.cancionId));
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Favorito eliminado!',
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                }
+            } else {
+                const errorText = await res.text();
+                throw new Error(`Error: ${res.status} - ${errorText}`);
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al actualizar favorito',
+                text: error.message,
+                confirmButtonText: 'Aceptar',
+            });
         }
-    };
+    }
 
     // Elimina una canción de los favoritos
     const removeFavorite = (song) => {
@@ -54,16 +117,42 @@ export const FavoritesProvider = ({ children }) => {
         }));
     };
 
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_URL}/canciones/favoritosByUser`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            }
+        )
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La respuesta de la red no fue exitosa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setFavorites(data);
+            })
+            .catch(error => {
+                console.error('Error cargando los favoritos:', error);
+            });
+    }, []);
+
     return (
         <FavoritesContext.Provider
             value={{
                 favorites,
-                addFavorite,
+                addFavorites,
+                verificarFavorito,
                 removeFavorite,
                 playlists,
                 createPlaylist,
                 addSongToPlaylist,
-                removeSongFromPlaylist
+                removeSongFromPlaylist,
+                selectedSongUrl,
+                setSelectedSongUrl,
             }}
         >
             {children}

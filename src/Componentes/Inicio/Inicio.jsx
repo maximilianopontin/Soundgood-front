@@ -8,7 +8,6 @@ import ReproductorBuscador from '../Reproductor musica/ReproductorBuscador';
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import Modal from 'react-modal';
 import { usePlayer } from '../Reproductor musica/PlayerContext';
-import Swal from "sweetalert2";
 
 Modal.setAppElement('#root'); // Establece el elemento raíz para accesibilidad
 
@@ -21,15 +20,16 @@ const Song = {
 export default function Inicio() {
     const [songsTop10, setSongsTop10] = useState([]);
     const [songsTendencias, setSongsTendencias] = useState([]);
-    const [favorites, setfavorites] = useState([]);
-    const [selectedSongUrl, setSelectedSongUrl] = useState(Song);
-    const { addFavorite, addSongToPlaylist, playlists } = useFavorites();
+    const [favorites, setFavorites] = useState([]);
+    const { addFavorites, verificarFavorito, addSongToPlaylist, playlists, setSelectedSongUrl, selectedSongUrl } = useFavorites();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [playlistName, setPlaylistName] = useState('');
     const [selectedPlaylist, setSelectedPlaylist] = useState(''); // Playlist seleccionada
     const [errorMessage, setErrorMessage] = useState('');
     const { currentSong, setCurrentSong } = usePlayer();
+
     const token = localStorage.getItem('access_token');
+
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/canciones/top10`)
             .then(response => {
@@ -62,7 +62,7 @@ export default function Inicio() {
                 return response.json();
             })
             .then(data => {
-                setfavorites(data);
+                setFavorites(data);
             })
             .catch(error => {
                 console.error('Error cargando los favoritos:', error);
@@ -84,69 +84,6 @@ export default function Inicio() {
             });
     }, []);
 
-    function verificarFavorito(data, cancionId) {
-        const existe = data.some(objeto => objeto.cancionId === cancionId);
-        return existe;
-    }
-
-    const addFavorites = async (song, favoritoExistente) => {
-        //agregar o remover la cancion ue esta en los favoritos del usuarios
-        const metodo = favoritoExistente ? "DELETE" : "POST";
-
-        try {
-            const token = localStorage.getItem('access_token');//aca obtenemos el token que contiene el id del usuario
-            // Mostrar la alerta de carga
-            Swal.fire({
-                title: metodo == "POST" ? 'Guardando tu favorito...' : "Eliminando tu favorito",
-                text: 'Por favor espera',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-            });
-
-
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/canciones/favoritos/${song.cancionId}`, {
-                method: metodo,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-            });
-
-            // console.log(res.status);
-            // Validar la respuesta
-            if (res.ok) {
-                if (metodo === "POST") {
-                    setfavorites((prevFavorites) => [...prevFavorites, song]);
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Favorito guardado!',
-                        timer: 1500,
-                        showConfirmButton: false,
-                    });
-                } else {
-                    setfavorites((prevFavorites) => prevFavorites.filter(fav => fav.cancionId !== song.cancionId));
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Favorito eliminado!',
-                        timer: 1500,
-                        showConfirmButton: false,
-                    });
-                }
-            } else {
-                const errorText = await res.text();
-                throw new Error(`Error: ${res.status} - ${errorText}`);
-            }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error al actualizar favorito',
-                text: error.message,
-                confirmButtonText: 'Aceptar',
-            });
-        }
-    };
 
     const openModal = (song) => {
         setCurrentSong(song.url); // Establece la canción en el contexto
@@ -158,6 +95,14 @@ export default function Inicio() {
         setPlaylistName('');
         setSelectedPlaylist('');
         setErrorMessage('');
+    };
+    // Usa setSelectedSongUrl directamente desde el contexto
+    const handleSongClickSong = (song) => {
+        setSelectedSongUrl({
+            url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`,
+            title: song.titulo,
+            tags: song.genero?.generos || [],
+        });
     };
     const handleAddToPlaylist = () => {
         if (selectedPlaylist) {
@@ -214,55 +159,47 @@ export default function Inicio() {
                 <Slider {...settings}>
                     {songsTop10.map((song, index) => (
                         <SongCard
-                        song={song}
-                        key={index}
-                        onClick={() => {
-                            setSelectedSongUrl({
-                                url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`,
-                                title: song.titulo,
-                                tags: song.genero?.generos,
-                            });
-                            setCurrentSong(song.url); // Establece la canción en el reproductor
-                        }}
-                        onFavorite={() =>
-                            addFavorites(song, verificarFavorito(favorites, song.cancionId))
-                        }
-                        valueFavorito={verificarFavorito(favorites, song.cancionId)}
-                        onAddToPlaylist={() => openModal(song)}
-                    />
-                ))}
-            </Slider>
-        </div>
+                            song={song}
+                            key={index}
+                            onClick={() => {
+                                handleSongClickSong(song)
+                                setCurrentSong(song.url); // Establece la canción en el reproductor
+                            }
+                            }
+                            onFavorite={() =>
+                                addFavorites(song, verificarFavorito(favorites, song.cancionId), setFavorites)
+                            }
+                            valueFavorito={verificarFavorito(favorites, song.cancionId)}
+                            onAddToPlaylist={() => openModal(song)}
+                        />
+                    ))}
+                </Slider>
+            </div>
             <p className="section-title">Tendencias</p>
             <div className="my-4">
                 <Slider {...settings}>
                     {songsTendencias.map((song, index) => (
                         <SongCard
-                        song={song}
-                        key={index}
-                        onClick={() => {
-                            setSelectedSongUrl({
-                                url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`,
-                                title: song.titulo,
-                                tags: [song.genero?.genero],
-                                artist: [song.artistas],
-                            });
-                            setCurrentSong(song.url); // Establece la canción en el reproductor
-                        }}
-                        onFavorite={() =>
-                            addFavorites(song, verificarFavorito(favorites, song.cancionId))
-                        }
-                        valueFavorito={verificarFavorito(favorites, song.cancionId)}
-                        onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
-                    />
-                ))}
+                            song={song}
+                            key={index}
+                            onClick={() => {
+                                handleSongClickSong(song)
+                                setCurrentSong(song.url); // Establece la canción en el reproductor
+                            }}
+                            onFavorite={() =>
+                                addFavorites(song, verificarFavorito(favorites, song.cancionId), setFavorites)
+                            }
+                            valueFavorito={verificarFavorito(favorites, song.cancionId)}
+                            onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
+                        />
+                    ))}
                 </Slider>
             </div>
-            {selectedSongUrl.url && 
-            <ReproductorBuscador 
-            songUrl={selectedSongUrl.url} 
-            title={selectedSongUrl.title} 
-            tags={selectedSongUrl.tags} />}
+            {selectedSongUrl.url &&
+                <ReproductorBuscador
+                    songUrl={selectedSongUrl.url}
+                    title={selectedSongUrl.title}
+                    tags={selectedSongUrl.tags} />}
 
             {/* Modal para agregar a playlist */}
             <Modal

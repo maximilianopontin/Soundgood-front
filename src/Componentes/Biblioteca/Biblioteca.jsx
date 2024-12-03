@@ -16,7 +16,7 @@ const Song = {
 };
 
 export default function Biblioteca() {
-    const { favorites, playlists, createPlaylist, removeFavorite, removeSongFromPlaylist } = useFavorites(); // Incluye métodos de eliminación
+    const { favorites, playlists, createPlaylist, removeFavorite, removeSongFromPlaylist, verificarFavorito, addFavorites, setFavorites, setSelectedSongUrl} = useFavorites(); // Incluye métodos de eliminación
     const [selectedSong, setSelectedSong] = useState(Song); // Canción seleccionada actualmente.
     const [playlistName, setPlaylistName] = useState(''); // Nombre de la nueva lista de reproducción que se está creando.
     const [showModal, setShowModal] = useState(false); // Booleano para mostrar u ocultar el modal de creación de listas de reproducción.
@@ -51,20 +51,21 @@ export default function Biblioteca() {
             {/* Muestra las canciones favoritas */}
             <div className="favorites-list">
                 {favorites.map((song, index) => (
-                    <div key={index} className="favorite-item" onClick={() => handleSongClick(song)}>
-                        <p>{song.title}
-                        </p>
-                        <button
-                            className="remove-button"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                removeFavorite(song); // Llama a la función de eliminar favoritos
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faMinus} />
-                        </button>
-                    </div>
-                ))}
+                     <div key={index} className="favorite-item" onClick={() => handleSongClick(song)}>
+                     <p>{song.title}
+                     </p>
+                     <button
+                         className="remove-button"
+                         onClick={(e) => {
+                             e.stopPropagation();
+                             removeFavorite(song); // Llama a la función de eliminar favoritos
+                         }}
+                     >
+                         <FontAwesomeIcon icon={faMinus} />
+                     </button>
+                 </div>
+             ))}
+               
             </div>
             <p className="section-title">Tus Playlists</p>
             {/* Muestra las listas de reproducción */}
