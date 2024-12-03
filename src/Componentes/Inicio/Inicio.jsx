@@ -21,7 +21,7 @@ const Song = {
 export default function Inicio() {
     const [songsTop10, setSongsTop10] = useState([]);
     const [songsTendencias, setSongsTendencias] = useState([]);
-    //crear setfavoriteusuario 
+    const [favorites, setfavorites] = useState([]);
     const [selectedSongUrl, setSelectedSongUrl] = useState(Song);
     const { addFavorite, addSongToPlaylist, playlists } = useFavorites();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +29,7 @@ export default function Inicio() {
     const [selectedPlaylist, setSelectedPlaylist] = useState(''); // Playlist seleccionada
     const [errorMessage, setErrorMessage] = useState('');
     const { currentSong, setCurrentSong } = usePlayer();
-//traer favoritos del usuario, mediante endpoint  canciones/favoritosbyuser
+    const token = localStorage.getItem('access_token');
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/canciones/top10`)
             .then(response => {
@@ -47,6 +47,28 @@ export default function Inicio() {
     }, []);
 
     useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_URL}/canciones/favoritosByUser`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            }
+        )
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La respuesta de la red no fue exitosa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setfavorites(data);
+            })
+            .catch(error => {
+                console.error('Error cargando los favoritos:', error);
+            });
+    }, []);
+    useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/canciones/tendencias`)
             .then(response => {
                 if (!response.ok) {
@@ -62,44 +84,49 @@ export default function Inicio() {
             });
     }, []);
 
-    const addFavorites = async (song, metodo) => {
+    function verificarFavorito(data, cancionId) {
+        const existe = data.some(objeto => objeto.cancionId === cancionId);
+        return existe;
+    }
 
-        try { 
+    const addFavorites = async (song, favoritoExistente) => {
+    let metodo = favoritoExistente ? "DELETE" : "POST";
+        try {
             const token = localStorage.getItem('access_token');//aca obtenemos el token que contiene el id del usuario
-          // Mostrar la alerta de carga
-          Swal.fire({
-            title: metodo == "POST" ? 'Guardando tu favorito...' : "Eliminando tu favorito",
-            text: 'Por favor espera',
-            allowOutsideClick: false,
-            didOpen: () => {
-              Swal.showLoading();
-            },
-          });
-          const res = await fetch(`${import.meta.env.VITE_API_URL}/favoritos/${song.cancionId}`, {
-            method: metodo,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        });
-          if (res.status === 200) {
-            Swal.close();
-      
-          } else {
+            // Mostrar la alerta de carga
             Swal.fire({
-              icon: 'error',
-              title: 'Oops... Error !!!!',
-              // text: `Error ${res.statusText}`,
-              confirmButtonText: 'Aceptar'
+                title: metodo == "POST" ? 'Guardando tu favorito...' : "Eliminando tu favorito",
+                text: 'Por favor espera',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
             });
-          }
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/favoritos/${song.cancionId}`, {
+                method: metodo,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            if (res.status === 200) {
+                Swal.close();
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops... Error !!!!',
+                    // text: `Error ${res.statusText}`,
+                    confirmButtonText: 'Aceptar'
+                });
+            }
         } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops... Error !!!!',
-            text: `Error ${error}`,
-            confirmButtonText: 'Aceptar'
-          });
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops... Error !!!!',
+                text: `Error ${error}`,
+                confirmButtonText: 'Aceptar'
+            });
         }
     }
 
@@ -169,17 +196,14 @@ export default function Inicio() {
                 <Slider {...settings}>
                     {songsTop10.map((song, index) => (
                         <SongCard
+                        song= {song}
                             key={index}
-                            title={song.titulo}
-                            tags={[song.genero?.genero]}
-                            artist={song.artistas}
-                            image={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`}
-                            url={`${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`}
                             onClick={() => {
                                 setSelectedSongUrl({ url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`, title: song.titulo, tags: song.genero?.generos });
                                 setCurrentSong(song.url); // Establece la canción en el contexto del reproductor
                             }}
-                            onFavorite={() => addFavorites(song)}
+                            onFavorite={() => addFavorites(song, verificarFavorito(favorites, song.cancionId))}
+                            valueFavorito={verificarFavorito(favorites, song.cancionId)}
                             onAddToPlaylist={() => openModal(song)}
                         />
                     ))}
@@ -190,17 +214,14 @@ export default function Inicio() {
                 <Slider {...settings}>
                     {songsTendencias.map((song, index) => (
                         <SongCard
+                        song= {song}
                             key={index}
-                            title={song.titulo}
-                            tags={[song.genero?.genero]}
-                            artist={song.artistas}
-                            image={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`}
-                            url={`${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`}
                             onClick={() => {
                                 setSelectedSongUrl({ url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`, title: song.titulo, tags: [song.genero?.genero], artist: [song.artistas] });
                                 setCurrentSong(song.url);
                             }}
-                            onFavorite={() => addFavorites(song)}
+                            onFavorite={() => addFavorites(song, verificarFavorito(favorites, song.cancionId))}
+                            valueFavorito={verificarFavorito(favorites, song.cancionId)}
                             onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
                         />
                     ))}
