@@ -8,6 +8,7 @@ import { SongCard } from '../Inicio/Card';
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import { usePlayer } from '../Reproductor musica/PlayerContext';
 import { IoCloseCircleOutline } from "react-icons/io5";
+import Slider from "react-slick";
 
 const Song = {
     url: '',
@@ -20,15 +21,15 @@ export default function Nav() {
     const [searchResults, setSearchResults] = useState([]);
     const [isSearchModalOpen, setSearchModalOpen] = useState(false);  // Modal de búsqueda
     const [isPlaylistModalOpen, setPlaylistModalOpen] = useState(false); // Modal de agregar a playlist
-    const [songUrlReproductor, setSongUrlReproductor] = useState(Song);
     const [cancionesTracks, setCancionesTracks] = useState([]);
-    const { addFavorite, addSongToPlaylist, playlists } = useFavorites();
+    const { addFavorites,verificarFavorito, addSongToPlaylist, playlists } = useFavorites();
     const [playlistName, setPlaylistName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     //const [currentSong, setCurrentSong] = useState(null);
     const { setCurrentSong } = usePlayer();
-    const [selectedPlaylist, setSelectedPlaylist] = useState
-        (''); // Playlist seleccionada
+    const [selectedPlaylist, setSelectedPlaylist] = useState(''); // Playlist seleccionada
+    const [favorites, setFavorites] = useState([]);
+    const [selectedSongUrl, setSelectedSongUrl] = useState({});
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/canciones`)
@@ -64,12 +65,12 @@ export default function Nav() {
             handleSearch();
         }
     };
-
-    const handleSongSelec = (song) => {
-        setSongUrlReproductor({ ...song });
-        setCurrentSong(song.url); // Establece la canción en el contexto
-        setSearchModalOpen(false); // Cierra el modal de búsqueda
-        setPlaylistModalOpen(false); // Cierra el modal de playlist, si está abierto
+    const handleSongClickSong = (song) => {
+        setSelectedSongUrl({
+            url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`,
+            title: song.titulo,
+            tags: song.genero?.generos || [],
+        });
     };
 
     const handleAddToPlaylist = () => {
@@ -94,13 +95,37 @@ export default function Nav() {
         }
     };
 
-    const handleFavorite = (song) => {
-        addFavorite(song); // Añade la canción a favoritos
-    };
 
     const openPlaylistModal = (song) => {
         setCurrentSong(song); // Establece la canción seleccionada
         setPlaylistModalOpen(true); // Abrir el modal de agregar a playlist
+    };
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 5, // Muestra 4 tarjetas
+        slidesToScroll: 1, // Cambia de una tarjeta a la vez
+        centerMode: true, // Activa el modo de centrado
+        centerPadding: '5%', // Espacio adicional a los lados
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    centerPadding: '20px',
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    centerPadding: '20px',
+                }
+            }
+        ]
     };
 
     return (
@@ -136,19 +161,28 @@ export default function Nav() {
                         </span>
                         <h2 className=" mt-0 mb-3 text-2xl font-bold text-gray-800 text-center">Canciones encontradas</h2>
                         <ul className="grid grid-cols-1 md:grid-cols-4 gap-5 content-between">
+                          
                             {searchResults.map((song, index) => (
                                 <SongCard
+                                    song={song}
                                     key={index}
-                                    title={song.titulo}
-                                    tags={[song.genero?.genero]}
-                                    artist={song.artistas}
-                                    image={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`}
-                                    url={`${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`}
-                                    onClick={() => handleSongSelec(song)}
-                                    onFavorite={() => handleFavorite(song)}
-                                    onAddToPlaylist={() => openPlaylistModal(song)}  // Abre el modal de playlist
+                                    onClick={() => {
+                                        handleSongClickSong(song)
+                                        setCurrentSong(song.url); // Establece la canción en el reproductor
+                                    }}
+                                    onFavorite={() =>
+                                        addFavorites(song, verificarFavorito(favorites, song.cancionId), setFavorites)
+                                    }
+                                    valueFavorito={verificarFavorito(favorites, song.cancionId)}
+                                    onAddToPlaylist={() => openModal(song)} // Asegúrate de que el modal se abre con la canción correcta
                                 />
                             ))}
+                            {selectedSongUrl.url &&
+                <ReproductorBuscador
+                    songUrl={selectedSongUrl.url}
+                    title={selectedSongUrl.title}
+                    tags={selectedSongUrl.tags} />}
+                        
                         </ul>
                     </div>
                 </div>
@@ -177,7 +211,11 @@ export default function Nav() {
                     </div>
                 </div>
             )}
-            <ReproductorBuscador songUrl={songUrlReproductor.url} title={songUrlReproductor.title} tags={songUrlReproductor.tags} />
+              {selectedSongUrl.url &&
+                <ReproductorBuscador
+                    songUrl={selectedSongUrl.url}
+                    title={selectedSongUrl.title}
+                    tags={selectedSongUrl.tags} />}
         </nav>
     );
 };

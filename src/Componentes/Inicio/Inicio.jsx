@@ -8,7 +8,7 @@ import ReproductorBuscador from '../Reproductor musica/ReproductorBuscador';
 import { useFavorites } from '../Biblioteca/FavoritesContext';
 import Modal from 'react-modal';
 import { usePlayer } from '../Reproductor musica/PlayerContext';
-
+ 
 Modal.setAppElement('#root'); // Establece el elemento raíz para accesibilidad
 
 const Song = {

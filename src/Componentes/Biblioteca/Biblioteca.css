@@ -9,11 +9,13 @@
 .favorites-list,
 .playlist-list {
     @apply flex flex-col gap-1 items-start  w-[370px];
+    color: black; 
 }
 
 .favorite-item,
 .playlist-item {
     @apply cursor-pointer ml-4 rounded max-w-[400px] w-full box-border bg-white text-black p-2 text-lg flex justify-between items-center;
+    color: black; 
 }
 
 .remove-button {

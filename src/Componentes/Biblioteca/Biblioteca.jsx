@@ -8,15 +8,15 @@ import { usePlayer } from '../Reproductor musica/PlayerContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 const Song = {
-    titulo:'',
-    tags:[],
-    artist:[],
-    image:'',
-    url:''
+    titulo: '',
+    tags: [],
+    artist: [],
+    image: '',
+    url: ''
 };
 
 export default function Biblioteca() {
-    const { favorites, playlists, createPlaylist, removeFavorite, removeSongFromPlaylist, verificarFavorito, addFavorites, setFavorites, setSelectedSongUrl} = useFavorites(); // Incluye métodos de eliminación
+    const { favorites, playlists, createPlaylist, removeFavorite, removeSongFromPlaylist, verificarFavorito, addFavorites, setFavorites, setSelectedSongUrl, selectedSongUrl } = useFavorites(); // Incluye métodos de eliminación
     const [selectedSong, setSelectedSong] = useState(Song); // Canción seleccionada actualmente.
     const [playlistName, setPlaylistName] = useState(''); // Nombre de la nueva lista de reproducción que se está creando.
     const [showModal, setShowModal] = useState(false); // Booleano para mostrar u ocultar el modal de creación de listas de reproducción.
@@ -50,10 +50,9 @@ export default function Biblioteca() {
             <p className="section-title">Tus favoritos</p>
             {/* Muestra las canciones favoritas */}
             <div className="favorites-list">
-                {favorites.map((song, index) => (
-                     <div key={index} className="favorite-item" onClick={() => handleSongClick(song)}>
-                     <p>{song.title}
-                     </p>
+                {/*{favorites.map((song, index) => (
+                   /*  <div key={index} className="favorite-item" onClick={() => handleSongClick(song)}>
+                     <p>{song.titulo}</p>
                      <button
                          className="remove-button"
                          onClick={(e) => {
@@ -63,9 +62,27 @@ export default function Biblioteca() {
                      >
                          <FontAwesomeIcon icon={faMinus} />
                      </button>
-                 </div>
-             ))}
-               
+                     
+                
+             ))}*/}
+                {favorites.map((song, index) => (
+                    <div key={index} className="favorite-item" onClick={() => handleSongClick(song)}>
+                        <SongCard
+                            song={song}
+                            key={index}
+                            onClick={() => {
+                                handleSongClickSong(song)
+                                setCurrentSong(song.url); // Establece la canción en el reproductor
+                            }
+                         }
+                            />
+                            <button className="remove-button" onClick={(e) => { e.stopPropagation(); removeFavorite(song); // Llama a la función de eliminar favoritos
+                            }} >
+                            <FontAwesomeIcon icon={faMinus} />
+                        </button>
+                    </div>
+
+                ))}
             </div>
             <p className="section-title">Tus Playlists</p>
             {/* Muestra las listas de reproducción */}
@@ -109,7 +126,7 @@ export default function Biblioteca() {
                 </div>
             )}
 
-            {/* Ver si hay elementos dentro de la playlist seleccionada */}
+            {/* Ver si hay elementos dentro de la playlist seleccionada 
             {selectedSong.titulo != '' && (
                 <div className="card-playlist">
                     <SongCard
@@ -119,9 +136,13 @@ export default function Biblioteca() {
                         image={selectedSong.image}
                         artist={selectedSong.artist}
                     />
-                    <ReproductorBuscador songUrl={selectedSong.url} title={selectedSong.title} tags={selectedSong.tags} />
                 </div>
-            )}
+            )}*/}
+            {selectedSongUrl.url &&
+                <ReproductorBuscador
+                    songUrl={selectedSongUrl.url}
+                    title={selectedSongUrl.title}
+                    tags={selectedSongUrl.tags} />}
         </div>
     );
 }

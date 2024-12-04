@@ -29,10 +29,11 @@ const colors = {
 
 function ReproductorBuscador({ songUrl, title, tags }) {
   const [tracks, setTracks] = useState([]); // Lista de pistas
-
+  
   // Actualiza las pistas cada vez que songUrl, title o tags cambien
   useEffect(() => {
     if (songUrl) {
+      console.log("Actualizando pista:", songUrl); 
       setTracks([
         {
           url: songUrl,
