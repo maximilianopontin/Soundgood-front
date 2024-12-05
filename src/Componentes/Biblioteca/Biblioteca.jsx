@@ -64,8 +64,16 @@ export default function Biblioteca() {
                             setCurrentSong(song.url);
                         }} // Llama a la función para reproducir la canción
                     >
-                        <p>{song.titulo} </p>
-                         {/* Solo muestra el título */}
+                       <p>
+                            {song.titulo}
+                            {song.artistas.length > 0 && (
+                                <span> - {song.artistas.map((tag, index) => (
+                                    <span key={index}>
+                                        {tag.nombre}{index < song.artistas.length - 1 && ', '}
+                                    </span>
+                                ))}</span>
+                            )}
+                        </p>
                         <button
                             className="remove-button"
                             onClick={(e) => { 
