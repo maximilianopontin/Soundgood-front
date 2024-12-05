@@ -21,7 +21,6 @@ export default function Biblioteca() {
     const [playlistName, setPlaylistName] = useState(''); // Nombre de la nueva lista de reproducción que se está creando.
     const [showModal, setShowModal] = useState(false); // Booleano para mostrar u ocultar el modal de creación de listas de reproducción.
     const [selectedPlaylist, setSelectedPlaylist] = useState(null); // Lista de reproducción seleccionada actualmente.
-
     const { setCurrentSong } = usePlayer(); // Utiliza el contexto del reproductor
 
     const handleCreatePlaylist = () => {
@@ -42,48 +41,44 @@ export default function Biblioteca() {
         }
     };
 
+    const handleSongClickSong = (song) => {
+        setSelectedSongUrl({
+            url: `${import.meta.env.VITE_API_URL}/files/song/${song.songFilename}`,
+            title: song.titulo,
+            tags: song.genero?.generos || [],
+        });
+    };
     return (
         <div className="biblioteca">
             <div className="flex justify-center">
                 <button className="create-playlist-button" onClick={() => setShowModal(true)}>Crear Playlist</button>
             </div>
-            <p className="section-title">Tus favoritos</p>
-            {/* Muestra las canciones favoritas */}
             <div className="favorites-list">
-                {/*{favorites.map((song, index) => (
-                   /*  <div key={index} className="favorite-item" onClick={() => handleSongClick(song)}>
-                     <p>{song.titulo}</p>
-                     <button
-                         className="remove-button"
-                         onClick={(e) => {
-                             e.stopPropagation();
-                             removeFavorite(song); // Llama a la función de eliminar favoritos
-                         }}
-                     >
-                         <FontAwesomeIcon icon={faMinus} />
-                     </button>
-                     
-                
-             ))}*/}
+            <p className="section-title">Tus favoritos</p>
                 {favorites.map((song, index) => (
-                    <div key={index} className="favorite-item" onClick={() => handleSongClick(song)}>
-                        <SongCard
-                            song={song}
-                            key={index}
-                            onClick={() => {
-                                handleSongClickSong(song)
-                                setCurrentSong(song.url); // Establece la canción en el reproductor
-                            }
-                         }
-                            />
-                            <button className="remove-button" onClick={(e) => { e.stopPropagation(); removeFavorite(song); // Llama a la función de eliminar favoritos
-                            }} >
+                    <div
+                        key={index}
+                        className="favorite-item"
+                        onClick={() => { 
+                            handleSongClickSong(song)
+                            setCurrentSong(song.url);
+                        }} // Llama a la función para reproducir la canción
+                    >
+                        <p>{song.titulo} </p>
+                         {/* Solo muestra el título */}
+                        <button
+                            className="remove-button"
+                            onClick={(e) => { 
+                                e.stopPropagation(); // Evita que el botón active la reproducción
+                                removeFavorite(song); // Elimina la canción de favoritos
+                            }}
+                        >
                             <FontAwesomeIcon icon={faMinus} />
                         </button>
                     </div>
-
                 ))}
             </div>
+
             <p className="section-title">Tus Playlists</p>
             {/* Muestra las listas de reproducción */}
             {Object.keys(playlists).map((name, index) => (
@@ -126,18 +121,7 @@ export default function Biblioteca() {
                 </div>
             )}
 
-            {/* Ver si hay elementos dentro de la playlist seleccionada 
-            {selectedSong.titulo != '' && (
-                <div className="card-playlist">
-                    <SongCard
-                        url={selectedSong.url}
-                        title={selectedSong.titulo}
-                        tags={selectedSong.tags}
-                        image={selectedSong.image}
-                        artist={selectedSong.artist}
-                    />
-                </div>
-            )}*/}
+
             {selectedSongUrl.url &&
                 <ReproductorBuscador
                     songUrl={selectedSongUrl.url}

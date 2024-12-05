@@ -206,9 +206,12 @@ export default function Inicio() {
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 className="modal-overlay"
-            >
-                <div className="Modal-playlist">
-                    <h2>Añadir a Playlist</h2>
+            ><div>
+
+            </div>
+                <div className="modal-playlist">
+                    <div className="modal-content-playlist">
+                    <h3>Añadir a Playlist</h3>
                     <select
                         className="modal-select-playlist"
                         value={selectedPlaylist}
@@ -223,6 +226,7 @@ export default function Inicio() {
                     <div className="modal-buttons">
                         <button onClick={handleAddToPlaylist}>Añadir</button>
                         <button onClick={closeModal}>Cancelar</button>
+                    </div>
                     </div>
                 </div>
             </Modal>

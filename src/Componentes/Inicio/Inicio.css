@@ -15,7 +15,7 @@
   }
   
   /* Estilo para el título del modal */
-  .Modal-playlist h2 {
+  .modal-playlist h2 {
     @apply mb-4 text-xl font-bold text-black no-underline;
   }
   

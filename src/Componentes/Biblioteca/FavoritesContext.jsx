@@ -78,10 +78,50 @@ export const FavoritesProvider = ({ children }) => {
         }
     }
 
+
     // Elimina una canción de los favoritos
-    const removeFavorite = (song) => {
+    /*const removeFavorite = (song) => {
         setFavorites((prev) => prev.filter((fav) => fav.url !== song.url));
+    };*/
+
+
+    const removeFavorite = async (song) => {
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/canciones/favoritos/${song.cancionId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (res.ok) {
+                // Si la eliminación fue exitosa, actualiza el estado de favoritos
+                setFavorites((prevFavorites) => prevFavorites.filter((fav) => fav.cancionId !== song.cancionId));
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Favorito eliminado!',
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+            } else {
+                const errorText = await res.text();
+                throw new Error(`Error: ${res.status} - ${errorText}`);
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al eliminar favorito',
+                text: error.message,
+                confirmButtonText: 'Aceptar',
+            });
+        }
     };
+    
+
+
+
+
 
     // Crea una nueva lista de reproducción si no existe.
     const createPlaylist = (playlistName) => {
