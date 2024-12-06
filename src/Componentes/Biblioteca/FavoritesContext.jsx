@@ -8,9 +8,9 @@ export const FavoritesProvider = ({ children }) => {
 
     const [favorites, setFavorites] = useState([]);
     const [playlists, setPlaylists] = useState({});
-    const token = localStorage.getItem('access_token');
     const [selectedSongUrl, setSelectedSongUrl] = useState({});
 
+   
     // Añade una canción a los favoritos si no está ya en la lista.
     const verificarFavorito = (data, cancionId) => {
         const existe = data.some(objeto => objeto.cancionId === cancionId);
@@ -44,11 +44,15 @@ export const FavoritesProvider = ({ children }) => {
                 },
             });
 
-            // console.log(res.status);
+         
             // Validar la respuesta
             if (res.ok) {
                 if (metodo === "POST") {
-                    setFavorites((prevFavorites) => [...prevFavorites, song]);
+                    setFavorites((prevFavorites) => {
+                        const updatedFavorites = [...prevFavorites, song];
+                        return updatedFavorites;
+                    });
+                    
                     Swal.fire({
                         icon: 'success',
                         title: '¡Favorito guardado!',
@@ -77,13 +81,6 @@ export const FavoritesProvider = ({ children }) => {
             });
         }
     }
-
-
-    // Elimina una canción de los favoritos
-    /*const removeFavorite = (song) => {
-        setFavorites((prev) => prev.filter((fav) => fav.url !== song.url));
-    };*/
-
 
     const removeFavorite = async (song) => {
         try {
@@ -117,10 +114,6 @@ export const FavoritesProvider = ({ children }) => {
             });
         }
     };
-    
-
-
-
 
 
     // Crea una nueva lista de reproducción si no existe.
@@ -157,33 +150,12 @@ export const FavoritesProvider = ({ children }) => {
         }));
     };
 
-    useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/canciones/favoritosByUser`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-            }
-        )
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('La respuesta de la red no fue exitosa');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setFavorites(data);
-            })
-            .catch(error => {
-                console.error('Error cargando los favoritos:', error);
-            });
-    }, []);
-
+ 
     return (
         <FavoritesContext.Provider
             value={{
                 favorites,
+                setFavorites,
                 addFavorites,
                 verificarFavorito,
                 removeFavorite,

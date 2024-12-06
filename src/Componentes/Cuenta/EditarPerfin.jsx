@@ -8,8 +8,7 @@ function EditaPerfil() {
     nombre: '',
     userName: '',
     email: '',
-    contraseña: '',
-    fechaDeNacimiento: ''
+    fechaNacimiento: ''
   });
   const [mensajeGuardado, setMensajeGuardado] = useState(false);
 
@@ -121,9 +120,10 @@ function EditaPerfil() {
             name="email"
             value={usuario.email}
             onChange={handleChange}
+            disabled
           />
         </div>
-        <div>
+        {/* <div>
           <label>Contraseña:</label>
           <input
             className="input-editar-Perfil"
@@ -132,14 +132,14 @@ function EditaPerfil() {
             value={usuario.contraseña}
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <div>
           <label>Fecha de Nacimiento:</label>
           <input
             className="input-editar-Perfil"
             type="date"
-            name="fechaDeNacimiento"
-            value={usuario.fechaDeNacimiento}
+            name="fechaNacimiento"
+            value={usuario.fechaNacimiento}
             onChange={handleChange}
           />
         </div>

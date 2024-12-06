@@ -20,8 +20,7 @@ const Song = {
 export default function Inicio() {
     const [songsTop10, setSongsTop10] = useState([]);
     const [songsTendencias, setSongsTendencias] = useState([]);
-    const [favorites, setFavorites] = useState([]);
-    const { addFavorites, verificarFavorito, addSongToPlaylist, playlists, setSelectedSongUrl, selectedSongUrl } = useFavorites();
+    const { addFavorites, verificarFavorito, addSongToPlaylist, playlists, setSelectedSongUrl, selectedSongUrl, favorites, setFavorites} = useFavorites();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [playlistName, setPlaylistName] = useState('');
     const [selectedPlaylist, setSelectedPlaylist] = useState(''); // Playlist seleccionada

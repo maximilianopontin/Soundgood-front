@@ -48,6 +48,7 @@ export default function Biblioteca() {
             tags: song.genero?.generos || [],
         });
     };
+    console.log (favorites)
     return (
         <div className="biblioteca">
             <div className="flex justify-center">
@@ -55,7 +56,7 @@ export default function Biblioteca() {
             </div>
             <div className="favorites-list">
             <p className="section-title">Tus favoritos</p>
-                {favorites.map((song, index) => (
+                {favorites.length > 0 && favorites.map((song, index) => (
                     <div
                         key={index}
                         className="favorite-item"
