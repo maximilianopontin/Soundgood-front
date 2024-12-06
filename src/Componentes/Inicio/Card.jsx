@@ -22,7 +22,7 @@ export function SongCard({ song, onClick, onFavorite, onAddToPlaylist, valueFavo
                 <img src={`${import.meta.env.VITE_API_URL}/files/image/${song.imageFilename}`} alt={song.artistas} className="artist-image" />
             </div>
             <h3 className="song-title">{song.titulo}</h3>
-            <p className="flex flex-col">
+            <p className="flex flex-col text-white">
                 {song.artistas.map((tag, index) => (
                     <span key={index}>{tag.nombre}</span>
                 ))}

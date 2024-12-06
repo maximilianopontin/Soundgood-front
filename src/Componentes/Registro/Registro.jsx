@@ -143,7 +143,7 @@ export default function PagRegistro() {
                 </div>
                 <button className="self-center w-full sm:w-11/12 py-2 bg-green-600 text-white rounded" type="submit">Aceptar y registrarse</button>
 
-                <div className="error-message">
+                <div className="error-message text-white text-center">
                     {errorMessage ? errorMessage : ""}
                 </div>
             </form>

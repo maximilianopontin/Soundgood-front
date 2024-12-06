@@ -46,7 +46,6 @@ export default function PagInicioSesion() {
                 setErrorMessage(data.message || 'Error al iniciar sesión. Inténtalo nuevamente.'); // Muestra el mensaje de error
             }
         } catch (error) {
-            console.error('Error en la solicitud de login:', error);
             setErrorMessage('Error al intentar iniciar sesión. Inténtalo nuevamente.');
         }
     };
@@ -93,7 +92,7 @@ export default function PagInicioSesion() {
                     required 
                 />
                 <button className="self-center w-full sm:w-11/12 py-2 bg-green-600 text-white rounded" type="submit">Iniciar sesión</button>
-                <div className="error-message">
+                <div className="error-message text-white text-center">
                     {errorMessage ? errorMessage : ""}
                 </div>
             </form>
