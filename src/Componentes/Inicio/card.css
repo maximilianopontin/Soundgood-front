@@ -6,7 +6,7 @@
 /* Estilos para la tarjeta de canción */
 .song-card {
     @apply border border-gray-300 rounded-lg p-3 text-center bg-gray-50 transition-transform duration-200 hover:scale-100 hover:shadow-lg flex flex-col justify-between box-border font-sans;
-    @apply min-w-[180px] w-[140px] min-h-[370px] h-[330px] md:min-w-[290px] md:w-[250px] md:min-h-[470px] md:h-[430px]; /* Tamaño aún más pequeño en pantallas pequeñas */
+    @apply min-w-[100px] w-[165px] min-h-[370px] h-[330px] md:min-w-[290px] md:w-[250px] md:min-h-[470px] md:h-[430px]; /* Tamaño aún más pequeño en pantallas pequeñas */
 }
 
 /* Contenedor de la imagen */

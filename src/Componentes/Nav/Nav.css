@@ -60,7 +60,7 @@
 
 @media (max-width: 576px) {
     .navbar {
-        @apply px-2 py-1; /* Reduce aún más el padding */
+        @apply px-0 py-1; /* Reduce aún más el padding */
     }
 
     .nav-logo img {
@@ -68,7 +68,7 @@
     }
 
     .nav-buscador input[type="text"] {
-        @apply w-[130px] text-sm; /* Reduce aún más el ancho y tamaño de fuente del input */
+        @apply w-[155px] text-sm; /* Reduce aún más el ancho y tamaño de fuente del input */
     }
 
     .nav-buscador button {

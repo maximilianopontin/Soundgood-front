@@ -96,7 +96,15 @@ export default function Biblioteca() {
                         <div className="playlist-list">
                             {playlists[name].map((song, songIndex) => (
                                 <div key={songIndex} className="playlist-item" onClick={() => handleSongClick(song)}>
-                                    <p>{songIndex + 1}. {song.title}</p>
+                                    <p>{songIndex + 1}. {song.titulo}
+                                    {song.artistas.length > 0 && (
+                                <span> - {song.artistas.map((tag, index) => (
+                                    <span key={index}>
+                                        {tag.nombre}{index < song.artistas.length - 1 && ', '}
+                                    </span>
+                                ))}</span>
+                            )}
+                                    </p>
                                     <button
                                         className="remove-button"
                                         onClick={(e) => {
