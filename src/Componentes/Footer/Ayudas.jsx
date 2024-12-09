@@ -3,7 +3,7 @@ import './Links.css';
 import { Link } from 'react-router-dom';
 function Ayudas() {
     return (
-        <div className='container-link'>
+        <div className='container-link flex flex-col bg-black'>
             <h1>¿Cómo te podemos ayudar?</h1>
             <h2>Actualizaciones de precios</h2>
             <p>
