@@ -48,7 +48,7 @@ export default function Biblioteca() {
             tags: song.genero?.generos || [],
         });
     };
-    console.log (favorites)
+    //console.log (favorites)
     return (
         <div className="biblioteca">
             <div className="flex justify-center">
@@ -96,7 +96,7 @@ export default function Biblioteca() {
                     {selectedPlaylist === name && (
                         <div className="playlist-list">
                             {playlists[name].map((song, songIndex) => (
-                                <div key={songIndex} className="playlist-item" onClick={() => handleSongClick(song)}>
+                                <div key={songIndex} className="playlist-item" onClick={() => handleSongClickSong(song)}>
                                     <p>{songIndex + 1}. {song.titulo}
                                     {song.artistas.length > 0 && (
                                 <span> - {song.artistas.map((tag, index) => (
