@@ -1,8 +1,8 @@
-###Link de app desplegada: https://soundgoodfront.onrender.com/
+### Link de app desplegada: https://soundgoodfront.onrender.com/
 
-Tecnologías utilizadas 🚀
+## Tecnologías utilizadas 🚀
 
-Framework y Librerías Principales
+# Framework y Librerías Principales
 
 React: Biblioteca principal para la creación de interfaces de usuario.
 
@@ -18,22 +18,22 @@ TailwindCSS: Estilos modernos y personalizables.
 
 SweetAlert2: Alertas estilizadas para notificaciones interactivas.
 
-Funcionalidades específicas
+## Funcionalidades específicas
 
-Audio Player: Reproductor de audio interactivo con la biblioteca @madzadev/audio-player.
-Date Picker: Selector de fechas para configuraciones, utilizando react-datepicker.
-Mercado Pago SDK: Integración de pagos con @mercadopago/sdk-react.
+# Audio Player: Reproductor de audio interactivo con la biblioteca @madzadev/audio-player.
+# Date Picker: Selector de fechas para configuraciones, utilizando react-datepicker.
+# Mercado Pago SDK: Integración de pagos con @mercadopago/sdk-react.
 
-Requisitos previos ⚙️
+## Requisitos previos ⚙️
 
 Node.js (versión 18 o superior).
 npm o yarn instalado en tu máquina.
 
-Instalación 🛠️
+## Instalación 🛠️
 Clona el repositorio
 
-Instala las dependencias:
+## Instala las dependencias:
 npm install  
 
-Inicia el servidor:
+## Inicia el servidor:
 npm run dev  
