@@ -1,8 +1,8 @@
-### Link de app desplegada: https://soundgoodfront.onrender.com/
+# Link de app desplegada: https://soundgoodfront.onrender.com/
 
 ## Tecnologías utilizadas 🚀
 
-# Framework y Librerías Principales
+### Framework y Librerías Principales
 
 React: Biblioteca principal para la creación de interfaces de usuario.
 
@@ -20,9 +20,9 @@ SweetAlert2: Alertas estilizadas para notificaciones interactivas.
 
 ## Funcionalidades específicas
 
-# Audio Player: Reproductor de audio interactivo con la biblioteca @madzadev/audio-player.
-# Date Picker: Selector de fechas para configuraciones, utilizando react-datepicker.
-# Mercado Pago SDK: Integración de pagos con @mercadopago/sdk-react.
+### Audio Player: Reproductor de audio interactivo con la biblioteca @madzadev/audio-player.
+### Date Picker: Selector de fechas para configuraciones, utilizando react-datepicker.
+### Mercado Pago SDK: Integración de pagos con @mercadopago/sdk-react.
 
 ## Requisitos previos ⚙️
 
