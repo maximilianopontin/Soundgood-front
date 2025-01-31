@@ -1,4 +1,4 @@
-// en esta seccion se muestra la pagina de inicio para registro e inicio de seccion
+// En esta seccion se muestra la pagina de inicio para registro e inicio de seccion
 import React from "react";
 import logo from '../../logo/logo.png'
 import Reproductor from '../Reproductor musica/ReproductorDemo';
